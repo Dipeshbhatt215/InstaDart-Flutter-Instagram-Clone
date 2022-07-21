@@ -12,10 +12,10 @@ class StoryInfo extends StatelessWidget {
   final double height;
   final Function onSwipeUp;
   const StoryInfo({
-    @required this.user,
-    @required this.story,
-    @required this.height,
-    @required this.onSwipeUp,
+    required this.user,
+    required this.story,
+    required this.height,
+    required this.onSwipeUp,
   });
 
   @override

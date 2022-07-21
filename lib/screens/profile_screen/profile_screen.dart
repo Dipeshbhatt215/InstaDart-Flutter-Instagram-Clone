@@ -24,11 +24,11 @@ class ProfileScreen extends StatefulWidget {
   final Function goToCameraScreen;
 
   ProfileScreen({
-    this.userId,
-    this.currentUserId,
-    this.onProfileEdited,
-    @required this.goToCameraScreen,
-    @required this.isCameFromBottomNavigation,
+    required this.userId,
+    required this.currentUserId,
+    required this.onProfileEdited,
+    required this.goToCameraScreen,
+    required this.isCameFromBottomNavigation,
   });
 
   @override
@@ -41,8 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int _followingCount = 0;
   List<Post> _posts = [];
   int _displayPosts = 0; // 0 - grid, 1 - column
-  User _profileUser;
-  List<Story> _userStories;
+  late User _profileUser;
+  late List<Story> _userStories;
 
   @override
   initState() {

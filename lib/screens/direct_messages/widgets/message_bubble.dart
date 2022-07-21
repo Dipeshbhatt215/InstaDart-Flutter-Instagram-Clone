@@ -14,7 +14,7 @@ class MessageBubble extends StatefulWidget {
   final Message message;
   final User user;
 
-  const MessageBubble({this.chat, this.message, this.user});
+  const MessageBubble({required this.chat, required this.message, required this.user});
 
   @override
   _MessageBubbleState createState() => _MessageBubbleState();

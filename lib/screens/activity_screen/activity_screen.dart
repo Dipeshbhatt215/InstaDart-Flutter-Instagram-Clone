@@ -13,7 +13,7 @@ import 'package:instagram/utilities/constants.dart';
 class ActivityScreen extends StatefulWidget {
   final User currentUser;
 
-  ActivityScreen({this.currentUser});
+  ActivityScreen({required this.currentUser});
 
   @override
   _ActivityScreenState createState() => _ActivityScreenState();

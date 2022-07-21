@@ -7,10 +7,10 @@ class Comment {
   final Timestamp timestamp;
 
   Comment({
-    this.id,
-    this.content,
-    this.authorId,
-    this.timestamp,
+    required this.id,
+    required this.content,
+    required this.authorId,
+    required this.timestamp,
   });
 
   factory Comment.fromDoc(DocumentSnapshot doc) {

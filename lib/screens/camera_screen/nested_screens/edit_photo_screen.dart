@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:instagram/screens/camera_screen/nested_screens/create_post_screen.dart';
 import 'package:instagram/services/core/filtered_image_converter.dart';
 import 'package:instagram/services/core/liquid_swipe_pages.dart';
@@ -11,7 +11,7 @@ import 'package:liquid_swipe/liquid_swipe.dart';
 
 class EditPhotoScreen extends StatefulWidget {
   final File imageFile;
-  EditPhotoScreen({@required this.imageFile});
+  EditPhotoScreen({required this.imageFile});
   @override
   _EditPhotoScreenState createState() => _EditPhotoScreenState();
 }
@@ -19,9 +19,9 @@ class EditPhotoScreen extends StatefulWidget {
 class _EditPhotoScreenState extends State<EditPhotoScreen>
     with TickerProviderStateMixin {
   final GlobalKey _globalKey = GlobalKey();
-  TabController _tabController;
+  late TabController _tabController;
   LiquidController _liquidController = LiquidController();
-  List<Container> _filterPages;
+  late List<Container> _filterPages;
   String _filterTitle = '';
   bool _newFilterTitle = false;
 
@@ -35,7 +35,7 @@ class _EditPhotoScreenState extends State<EditPhotoScreen>
 
   @override
   void dispose() {
-    _tabController?.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -159,7 +159,7 @@ class _EditPhotoScreenState extends State<EditPhotoScreen>
     Navigator.of(_globalKey.currentContext).push(
       MaterialPageRoute(
         builder: (context) => CreatePostScreen(
-          imageFile: file,
+          imageFile: file, post: null, postStatus: null,
         ),
       ),
     );

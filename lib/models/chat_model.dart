@@ -11,13 +11,13 @@ class Chat {
   final dynamic readStatus;
 
   Chat({
-    this.id,
-    this.recentMessage,
-    this.recentSender,
-    this.recentTimestamp,
-    this.memberIds,
-    this.memberInfo,
-    this.readStatus,
+    required this.id,
+    required this.recentMessage,
+    required this.recentSender,
+    required this.recentTimestamp,
+    required this.memberIds,
+    required this.memberInfo,
+    required this.readStatus,
   });
 
   factory Chat.fromDoc(DocumentSnapshot doc) {
@@ -27,7 +27,7 @@ class Chat {
       recentSender: doc['recentSender'],
       recentTimestamp: doc['recentTimestamp'],
       memberIds: doc['memberIds'],
-      readStatus: doc['readStatus'],
+      readStatus: doc['readStatus'], memberInfo: [],
     );
   }
 }

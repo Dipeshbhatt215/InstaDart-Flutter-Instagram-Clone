@@ -10,13 +10,13 @@ class Message {
   final bool isLiked;
 
   Message(
-      {this.id,
-      this.senderId,
-      this.text,
-      this.imageUrl,
-      this.timestamp,
-      this.giphyUrl,
-      this.isLiked});
+      {required this.id,
+      required this.senderId,
+      required this.text,
+      required this.imageUrl,
+      required this.timestamp,
+      required this.giphyUrl,
+      required this.isLiked});
 
   factory Message.fromDoc(DocumentSnapshot doc) {
     return Message(

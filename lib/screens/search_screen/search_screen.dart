@@ -16,7 +16,7 @@ import 'package:instagram/utilities/constants.dart';
 class SearchScreen extends StatefulWidget {
   final SearchFrom searchFrom;
   final File imageFile;
-  SearchScreen({@required this.searchFrom, this.imageFile});
+  SearchScreen({required this.searchFrom, required this.imageFile});
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -24,7 +24,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController _searchController = TextEditingController();
-  Future<QuerySnapshot> _users;
+  late Future<QuerySnapshot> _users;
   String _searchText = '';
 
   ListTile _buildUserTile(User user) {
@@ -73,7 +73,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     isCameFromBottomNavigation: false,
                     userId: user.id,
                     currentUserId: Provider.of<UserData>(context, listen: false)
-                        .currentUserId,
+                        .currentUserId, onProfileEdited: null,
                   ),
                 ),
               )
@@ -159,9 +159,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   );
                 }
                 return ListView.builder(
-                    itemCount: snapshot.data.documents.length,
+                    itemCount: snapshot.data?.documents.length,
                     itemBuilder: (BuildContext context, int index) {
-                      User user = User.fromDoc(snapshot.data.documents[index]);
+                      User user = User.fromDoc(snapshot.data?.documents[index]);
                       // Prevent current user to send messages to himself
                       return (widget.searchFrom != SearchFrom.homeScreen &&
                               user.id == _currentUserId)

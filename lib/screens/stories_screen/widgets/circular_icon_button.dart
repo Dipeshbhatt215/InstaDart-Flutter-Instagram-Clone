@@ -10,11 +10,11 @@ class CircularIconButton extends StatelessWidget {
   final Color splashColor;
 
   const CircularIconButton(
-      {this.icon,
-      this.onTap,
+      {required this.icon,
+      required this.onTap,
       this.containerRadius = 36,
       this.backColor = Colors.black26,
-      this.splashColor,
+      required this.splashColor,
       this.padding = const EdgeInsets.all(0)});
   @override
   Widget build(BuildContext context) {

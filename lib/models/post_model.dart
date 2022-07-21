@@ -11,14 +11,14 @@ class Post {
   final bool commentsAllowed;
 
   Post({
-    this.id,
-    this.imageUrl,
-    this.caption,
-    this.likeCount,
-    this.authorId,
-    this.location,
-    this.timestamp,
-    this.commentsAllowed,
+    required this.id,
+    required this.imageUrl,
+    required this.caption,
+    required this.likeCount,
+    required this.authorId,
+    required this.location,
+    required this.timestamp,
+    required this.commentsAllowed,
   });
 
   factory Post.fromDoc(DocumentSnapshot doc) {

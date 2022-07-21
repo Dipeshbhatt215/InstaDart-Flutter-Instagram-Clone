@@ -13,17 +13,17 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _email, _password, _name;
+  late String _email, _password, _name;
   bool _isLoading = false;
 
   _submit() async {
     FocusScope.of(context).unfocus();
 
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState?.validate()) {
       setState(() {
         _isLoading = true;
       });
-      _formKey.currentState.save();
+      _formKey.currentState?.save();
       //Signup user with Firebase
       try {
         await AuthService.signUpUser(
@@ -79,10 +79,10 @@ class _SignupScreenState extends State<SignupScreen> {
                             horizontal: 30.0, vertical: 10.0),
                         child: TextFormField(
                           decoration: InputDecoration(labelText: 'Name'),
-                          validator: (input) => input.trim().isEmpty
+                          validator: (input) => input?.trim().isEmpty
                               ? 'Please enter a valid name'
                               : null,
-                          onSaved: (input) => _name = input,
+                          onSaved: (input) => _name = input!,
                         ),
                       ),
                       Padding(
@@ -95,7 +95,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           validator: (input) => !input.contains('@')
                               ? 'Please enter a valid email'
                               : null,
-                          onSaved: (input) => _email = input,
+                          onSaved: (input) => _email = input!,
                         ),
                       ),
                       Padding(
@@ -107,7 +107,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           validator: (input) => input.length < 6
                               ? 'Password must be at least 6 characters'
                               : null,
-                          onSaved: (input) => _password = input,
+                          onSaved: (input) => _password = input!,
                         ),
                       ),
                       SizedBox(height: 20.0),

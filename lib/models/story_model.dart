@@ -14,17 +14,17 @@ class Story {
   final int duration;
 
   Story({
-    this.id,
-    this.timeStart,
-    this.timeEnd,
-    this.authorId,
-    this.imageUrl,
-    this.caption,
-    this.views,
-    this.location,
-    this.filter,
-    this.linkUrl,
-    this.duration,
+    required this.id,
+    required this.timeStart,
+    required this.timeEnd,
+    required this.authorId,
+    required this.imageUrl,
+    required this.caption,
+    required this.views,
+    required this.location,
+    required this.filter,
+    required this.linkUrl,
+    required this.duration,
   });
 
   factory Story.fromDoc(DocumentSnapshot doc) {

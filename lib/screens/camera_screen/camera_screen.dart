@@ -22,9 +22,9 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  String imagePath;
+  late String imagePath;
   bool _toggleCamera = false;
-  CameraController controller;
+  late CameraController controller;
   final _picker = ImagePicker();
   CameraConsumer _cameraConsumer = CameraConsumer.post;
 
@@ -43,7 +43,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller.dispose();
     super.dispose();
   }
 
@@ -288,7 +288,7 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void getGalleryImage() async {
-    PickedFile pickedFile = await _picker.getImage(source: ImageSource.gallery);
+    PickedFile? pickedFile = await _picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         imagePath = pickedFile.path;
@@ -326,7 +326,7 @@ class _CameraScreenState extends State<CameraScreen> {
     }
   }
 
-  Future<String> takePicture() async {
+  Future<String?> takePicture() async {
     if (!controller.value.isInitialized) {
       showMessage('Error: select a camera first.');
       return null;
@@ -350,7 +350,7 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   _cropImage(File imageFile) async {
-    File croppedImage = await ImageCropper.cropImage(
+    CroppedFile? croppedImage = await ImageCropper.cropImage(
       androidUiSettings: AndroidUiSettings(
         backgroundColor: Theme.of(context).backgroundColor,
         toolbarColor: Theme.of(context).appBarTheme.color,

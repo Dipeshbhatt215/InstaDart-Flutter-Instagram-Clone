@@ -19,11 +19,11 @@ class _LoginScreenState extends State<LoginScreen> {
   _submit() async {
     FocusScope.of(context).unfocus();
 
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState?.validate()) {
       setState(() {
         _isLoading = true;
       });
-      _formKey.currentState.save();
+      _formKey.currentState?.save();
       //Logging the user
       try {
         await AuthService.loginUser(_email.trim(), _password.trim());
@@ -78,10 +78,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             horizontal: 30.0, vertical: 10.0),
                         child: TextFormField(
                           decoration: InputDecoration(labelText: 'Email'),
-                          validator: (input) => !input.contains('@')
+                          validator: (input) => !input?.contains('@')
                               ? 'Please enter a valid email'
                               : null,
-                          onSaved: (input) => _email = input,
+                          onSaved: (input) => _email = input!,
                         ),
                       ),
                       Padding(
@@ -90,10 +90,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextFormField(
                           decoration: InputDecoration(labelText: 'Password'),
                           obscureText: true,
-                          validator: (input) => input.length < 6
+                          validator: (input) => input?.length < 6
                               ? 'Password must be at least 6 characters'
                               : null,
-                          onSaved: (input) => _password = input,
+                          onSaved: (input) => _password = input!,
                         ),
                       ),
                       SizedBox(height: 20.0),

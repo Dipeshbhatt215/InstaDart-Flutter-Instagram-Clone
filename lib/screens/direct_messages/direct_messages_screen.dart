@@ -21,7 +21,7 @@ class _DirectMessagesScreenState extends State<DirectMessagesScreen> {
         title: Text('Direct'),
       ),
       body: DirectMessagesWidget(
-        searchFrom: SearchFrom.messagesScreen,
+        searchFrom: SearchFrom.messagesScreen, imageFile: null,
       ),
     );
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,9 +19,9 @@ class CreatePostScreen extends StatefulWidget {
   final PostStatus postStatus;
   final File imageFile;
   CreatePostScreen({
-    this.post,
-    this.postStatus,
-    this.imageFile,
+    required this.post,
+    required this.postStatus,
+    required this.imageFile,
   });
 
   @override
@@ -34,8 +36,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   String _caption = '';
   bool _isLoading = false;
-  Post _post;
-  String _currentUserId;
+  late Post _post;
+  late String _currentUserId;
   @override
   initState() {
     super.initState();
@@ -60,8 +62,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   @override
   void dispose() {
-    _captionController?.dispose();
-    _locationController?.dispose();
+    _captionController.dispose();
+    _locationController.dispose();
     super.dispose();
   }
 
@@ -69,9 +71,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     FocusScope.of(context).unfocus();
 
     if (!_isLoading &&
-        _formKey.currentState.validate() &&
+        _formKey.currentState?.validate() &&
         (widget.imageFile != null || _post.imageUrl != null)) {
-      _formKey.currentState.save();
+      _formKey.currentState?.save();
 
       if (mounted) {
         setState(() {
@@ -103,7 +105,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           likeCount: 0,
           authorId: _currentUserId,
           timestamp: Timestamp.fromDate(DateTime.now()),
-          commentsAllowed: true,
+          commentsAllowed: true, id: '',
         );
 
         DatabaseService.createPost(post);
@@ -120,7 +122,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Theme.of(context).appBarTheme.color,
           centerTitle: true,
@@ -158,9 +160,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               children: <Widget>[
                 PostCaptionForm(
                   screenSize: screenSize,
-                  imageUrl: _post?.imageUrl,
+                  imageUrl: _post.imageUrl,
                   controller: _captionController,
-                  imageFile: widget?.imageFile,
+                  imageFile: widget.imageFile,
                   onChanged: (val) {
                     setState(() {
                       _caption = val;

@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class ProfileScreenDrawer extends StatelessWidget {
   final User user;
-  ProfileScreenDrawer({@required this.user});
+  ProfileScreenDrawer({required this.user});
 
   _buildDrawerOption(Widget icon, String title, Function onTap) {
     return ListTile(

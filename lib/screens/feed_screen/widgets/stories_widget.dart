@@ -5,7 +5,6 @@ import 'package:instagram/screens/feed_screen/widgets/story_circle.dart';
 import 'package:instagram/services/services.dart';
 import 'package:provider/provider.dart';
 import '../../../models/user_model.dart';
-
 class StoriesWidget extends StatefulWidget {
   final List<User> users;
   final Function goToCameraScreen;
@@ -19,7 +18,7 @@ class _StoriesWidgetState extends State<StoriesWidget> {
   bool _isLoading = false;
   List<User> _followingUsers = [];
   List<Story> _stories = [];
-  User _currentUser;
+  late User _currentUser;
   bool _isCurrentUserHasStories = false;
 
   @override

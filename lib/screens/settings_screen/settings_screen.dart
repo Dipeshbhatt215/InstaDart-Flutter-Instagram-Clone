@@ -13,7 +13,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  String _currentUserId;
+  late String _currentUserId;
 
   _buildOptionTile(Icon icon, String title, Function onTap) {
     return ListTile(

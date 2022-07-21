@@ -11,8 +11,8 @@ class BlankStoryCircle extends StatelessWidget {
   final bool showUserName;
 
   BlankStoryCircle({
-    @required this.user,
-    @required this.goToCameraScreen,
+    required this.user,
+    required this.goToCameraScreen,
     this.size = 60,
     this.showUserName = true,
   });

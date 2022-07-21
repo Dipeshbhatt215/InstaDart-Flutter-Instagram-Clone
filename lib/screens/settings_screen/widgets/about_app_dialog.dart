@@ -37,7 +37,7 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
       context,
       MaterialPageRoute(
         builder: (_) => ChatScreen(
-          receiverUser: user,
+          receiverUser: user, imageFile: null,
         ),
       ),
     );

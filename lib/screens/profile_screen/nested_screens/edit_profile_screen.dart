@@ -15,7 +15,7 @@ class EditProfileScreen extends StatefulWidget {
   final User user;
   final Function updateUser;
 
-  EditProfileScreen({this.user, this.updateUser});
+  EditProfileScreen({required this.user, required this.updateUser});
 
   @override
   _EditProfileScreenState createState() => _EditProfileScreenState();
@@ -26,7 +26,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String _name = '';
   String _bio = '';
   String _website = '';
-  File _profileImage;
+  late File _profileImage;
   final picker = ImagePicker();
   bool _isLoading = false;
 
@@ -39,7 +39,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   _handleImageFromGallery() async {
-    PickedFile pickedFile = await picker.getImage(source: ImageSource.gallery);
+    PickedFile? pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _profileImage = File(pickedFile.path);
@@ -83,7 +83,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           bio: _bio.trim(),
           role: widget.user.role,
           isVerified: widget.user.isVerified,
-          website: url);
+          website: url, email: '', isBanned: null, timeCreated: null, token: '');
 
       //Database Update
       DatabaseService.updateUser(user);
@@ -159,12 +159,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             size: 30.0,
                           ),
                           labelText: 'Name'),
-                      validator: (input) => input.trim().length < 1
+                      validator: (input) => input?.trim().length < 1
                           ? 'Please enter a valid name'
                           : input.trim().length > 20
                               ? 'Please enter name less than 20 characters'
                               : null,
-                      onSaved: (input) => _name = input,
+                      onSaved: (input) => _name = input!,
                     ),
                     TextFormField(
                       initialValue: _bio,
@@ -178,10 +178,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             size: 30.0,
                           ),
                           labelText: 'Bio'),
-                      validator: (input) => input.trim().length > 150
+                      validator: (input) => input?.trim().length > 150
                           ? 'Please enter a bio less than 150 characters'
                           : null,
-                      onSaved: (input) => _bio = input,
+                      onSaved: (input) => _bio = input!,
                     ),
                     TextFormField(
                       initialValue: _website,
@@ -192,7 +192,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             size: 30.0,
                           ),
                           labelText: 'Website'),
-                      onSaved: (input) => _website = input,
+                      onSaved: (input) => _website = input!,
                     ),
                     Container(
                       margin: const EdgeInsets.all(40.0),

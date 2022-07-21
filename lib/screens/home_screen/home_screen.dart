@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _lastTab = 0;
   PageController _pageController;
   User _currentUser;
-  List<CameraDescription> _cameras;
+  late List<CameraDescription> _cameras;
   CameraConsumer _cameraConsumer = CameraConsumer.post;
 
   @override
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    _pageController?.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 

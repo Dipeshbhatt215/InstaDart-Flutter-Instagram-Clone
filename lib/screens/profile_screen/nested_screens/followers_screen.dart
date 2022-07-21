@@ -19,13 +19,13 @@ class FollowersScreen extends StatefulWidget {
   final Function updateFollowingCount;
 
   const FollowersScreen(
-      {this.user,
-      this.followersCount,
-      this.followingCount,
-      this.selectedTab,
-      this.currenUserId,
-      this.updateFollowersCount,
-      this.updateFollowingCount});
+      {required this.user,
+      required this.followersCount,
+      required this.followingCount,
+      required this.selectedTab,
+      required this.currenUserId,
+      required this.updateFollowersCount,
+      required this.updateFollowingCount});
 
   @override
   _FollowersScreenState createState() => _FollowersScreenState();
@@ -37,8 +37,8 @@ class _FollowersScreenState extends State<FollowersScreen> {
   bool _isLoading = false;
   List<bool> _userFollowersState = [];
   List<bool> _userFollowingState = [];
-  int _followingCount;
-  int _followersCount;
+  late int _followingCount;
+  late int _followersCount;
 
   @override
   void initState() {

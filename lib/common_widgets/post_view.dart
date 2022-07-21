@@ -18,7 +18,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:http/http.dart';
-import 'package:share/share.dart';
+
 import 'package:path_provider/path_provider.dart';
 
 class PostView extends StatefulWidget {
@@ -28,7 +28,7 @@ class PostView extends StatefulWidget {
   final PostStatus postStatus;
 
   PostView(
-      {this.currentUserId, this.post, this.author, @required this.postStatus});
+      {required this.currentUserId, required this.post, required this.author, required this.postStatus});
 
   @override
   _PostViewState createState() => _PostViewState();
@@ -118,17 +118,18 @@ class _PostViewState extends State<PostView> {
   }
 
   _saveAndShareFile() async {
-    final RenderBox box = context.findRenderObject();
+    final RenderObject? box = context.findRenderObject();
 
     var response = await get(widget.post.imageUrl);
     final documentDirectory = (await getExternalStorageDirectory()).path;
     File imgFile = new File('$documentDirectory/${widget.post.id}.png');
     imgFile.writeAsBytesSync(response.bodyBytes);
 
+   
     Share.shareFiles([imgFile.path],
         subject: 'Have a look at ${widget.author.name} post!',
         text: '${widget.author.name} : ${widget.post.caption}',
-        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
   }
 
   _iosBottomSheet() {

@@ -8,13 +8,13 @@ import 'package:instagram/common_widgets/post_view.dart';
 class DeletedPostsScreen extends StatefulWidget {
   final String currentUserId;
   final PostStatus postStatus;
-  DeletedPostsScreen({@required this.currentUserId, @required this.postStatus});
+  DeletedPostsScreen({required this.currentUserId, required this.postStatus});
   @override
   _DeletedPostsScreenState createState() => _DeletedPostsScreenState();
 }
 
 class _DeletedPostsScreenState extends State<DeletedPostsScreen> {
-  List<Post> _posts;
+  late List<Post> _posts;
 
   @override
   void initState() {

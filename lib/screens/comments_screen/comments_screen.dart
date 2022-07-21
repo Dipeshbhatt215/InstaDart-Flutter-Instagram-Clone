@@ -18,7 +18,7 @@ class CommentsScreen extends StatefulWidget {
   final PostStatus postStatus;
 
   CommentsScreen(
-      {this.post, this.likeCount, this.author, @required this.postStatus});
+      {required this.post, required this.likeCount, required this.author, required this.postStatus});
 
   @override
   _CommentsScreenState createState() => _CommentsScreenState();

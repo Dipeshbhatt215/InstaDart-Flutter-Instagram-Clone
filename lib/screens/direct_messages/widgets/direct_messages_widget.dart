@@ -17,14 +17,14 @@ import 'package:provider/provider.dart';
 class DirectMessagesWidget extends StatefulWidget {
   final SearchFrom searchFrom;
   final File imageFile;
-  DirectMessagesWidget({@required this.searchFrom, this.imageFile});
+  DirectMessagesWidget({required this.searchFrom, required this.imageFile});
   @override
   _DirectMessagesWidgetState createState() => _DirectMessagesWidgetState();
 }
 
 class _DirectMessagesWidgetState extends State<DirectMessagesWidget> {
-  Stream<List<Chat>> chatsStream;
-  User _currentUser;
+  late Stream<List<Chat>> chatsStream;
+  late User _currentUser;
 
   @override
   void initState() {
@@ -176,7 +176,7 @@ class _DirectMessagesWidgetState extends State<DirectMessagesWidget> {
         context,
         MaterialPageRoute(
           builder: (_) => ChatScreen(
-            receiverUser: users[receiverIndex],
+            receiverUser: users[receiverIndex], imageFile: null,
           ),
         ),
       ),

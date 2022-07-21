@@ -12,9 +12,9 @@ class StoryScreen extends StatefulWidget {
   final User user;
   final int seenStories;
   const StoryScreen(
-      {@required this.stories,
-      @required this.user,
-      @required this.seenStories});
+      {required this.stories,
+      required this.user,
+      required this.seenStories});
 
   @override
   _StoryScreenState createState() => _StoryScreenState();
@@ -22,11 +22,11 @@ class StoryScreen extends StatefulWidget {
 
 class _StoryScreenState extends State<StoryScreen>
     with SingleTickerProviderStateMixin {
-  PageController _pageController;
-  AnimationController _animController;
+  late PageController _pageController;
+  late AnimationController _animController;
   int _currentIndex = 0;
-  DragStartDetails startVerticalDragDetails;
-  DragUpdateDetails updateVerticalDragDetails;
+  late DragStartDetails startVerticalDragDetails;
+  late DragUpdateDetails updateVerticalDragDetails;
   int _seenStories;
 
   @override
@@ -66,8 +66,8 @@ class _StoryScreenState extends State<StoryScreen>
 
   @override
   void dispose() {
-    _pageController?.dispose();
-    _animController?.dispose();
+    _pageController.dispose();
+    _animController.dispose();
     super.dispose();
   }
 
@@ -90,13 +90,13 @@ class _StoryScreenState extends State<StoryScreen>
               startVerticalDragDetails.globalPosition.dx;
           double dy = updateVerticalDragDetails.globalPosition.dy -
               startVerticalDragDetails.globalPosition.dy;
-          double velocity = endDetails.primaryVelocity;
+          double? velocity = endDetails.primaryVelocity;
 
           //Convert values to be positive
           if (dx < 0) dx = -dx;
           if (dy < 0) dy = -dy;
 
-          if (velocity < 0) {
+          if (velocity! < 0) {
             //swipe Up
             _onSwipeUp();
           } else {
@@ -144,7 +144,7 @@ class _StoryScreenState extends State<StoryScreen>
                               AnimatedBar(
                                 animationController: _animController,
                                 position: i,
-                                currentIndex: _currentIndex,
+                                currentIndex: _currentIndex, key: null,
                               ));
                         })
                         .values
@@ -211,7 +211,7 @@ class _StoryScreenState extends State<StoryScreen>
   void _loadStory({Story story, bool animateToPage = true}) {
     _animController.stop();
     _animController.reset();
-    _animController.duration = Duration(seconds: story.duration ?? 10);
+    _animController.duration = Duration(seconds: story.duration);
     _animController.forward();
 
     if (animateToPage) {

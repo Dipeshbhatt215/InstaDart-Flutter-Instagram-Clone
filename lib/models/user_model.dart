@@ -19,17 +19,17 @@ class User {
   final Timestamp timeCreated;
 
   User({
-    this.id,
-    this.name,
-    this.profileImageUrl,
-    this.email,
-    this.bio,
-    this.token,
-    this.isBanned,
-    this.isVerified,
-    this.website,
-    this.role,
-    this.timeCreated,
+    required this.id,
+    required this.name,
+    required this.profileImageUrl,
+    required this.email,
+   required this.bio,
+  required  this.token,
+  required  this.isBanned,
+  required  this.isVerified,
+  required  this.website,
+  required  this.role,
+   required this.timeCreated,
   });
 
   factory User.fromDoc(DocumentSnapshot doc) {

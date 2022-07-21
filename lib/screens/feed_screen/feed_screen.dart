@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram/models/models.dart';
 import 'package:instagram/services/services.dart';
 import 'package:instagram/utilities/constants.dart';
-import 'package:instagram/utilities/repo_const.dart';
+
 import 'package:instagram/utilities/themes.dart';
 import 'package:instagram/screens/feed_screen/widgets/stories_widget.dart';
 import 'package:instagram/common_widgets/instaDart_richText.dart';
@@ -18,7 +18,7 @@ class FeedScreen extends StatefulWidget {
   final Function goToCameraScreen;
 
   FeedScreen(
-      {this.currentUserId, this.goToDirectMessages, this.goToCameraScreen});
+      {required this.currentUserId, required this.goToDirectMessages, required this.goToCameraScreen});
   @override
   _FeedScreenState createState() => _FeedScreenState();
 }

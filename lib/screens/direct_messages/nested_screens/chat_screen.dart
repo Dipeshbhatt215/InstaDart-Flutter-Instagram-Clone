@@ -4,13 +4,13 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram/models/models.dart';
 import 'package:instagram/services/services.dart';
 import 'package:instagram/utilities/constants.dart';
 import 'package:instagram/utilities/custom_navigation.dart';
-import 'package:instagram/utilities/repo_const.dart';
+
 import 'package:instagram/screens/direct_messages/widgets/message_bubble.dart';
 import 'package:instagram/common_widgets/user_badges.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,7 @@ class ChatScreen extends StatefulWidget {
   final User receiverUser;
   final File imageFile;
 
-  const ChatScreen({this.receiverUser, this.imageFile});
+  const ChatScreen({required this.receiverUser, required this.imageFile});
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -29,11 +29,11 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   bool _isComposingMessage = false;
-  Chat _chat;
+  late Chat _chat;
   bool _isChatExist = false;
-  User _currentUser;
-  List<String> _userIds;
-  List<User> _memberInfo;
+  late User _currentUser;
+  late List<String> _userIds;
+  late List<User> _memberInfo;
   bool _isLoading = false;
   bool _isSending = false;
 
@@ -183,7 +183,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 size: 20,
               ),
               onPressed: () async {
-                PickedFile pickedFile = await ImagePicker().getImage(
+                PickedFile? pickedFile = await ImagePicker().getImage(
                   source: ImageSource.camera,
                 );
                 File imageFile = File(pickedFile.path);
@@ -233,7 +233,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: IconButton(
                       icon: Icon(Icons.photo),
                       onPressed: () async {
-                        PickedFile pickedFile = await ImagePicker().getImage(
+                        PickedFile? pickedFile = await ImagePicker().getImage(
                           source: ImageSource.gallery,
                         );
                         File imageFile = File(pickedFile.path);
@@ -254,7 +254,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: IconButton(
                         icon: Icon(Icons.insert_emoticon),
                         onPressed: () async {
-                          GiphyGif gif = await GiphyGet.getGif(
+                          GiphyGif? gif = await GiphyGet.getGif(
                             context: context,
                             apiKey: kGiphyApiKey, //YOUR API KEY HERE
                             lang: GiphyLanguage.spanish,
@@ -294,7 +294,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  _sendMessage({String text, String imageUrl, String giphyUrl}) async {
+  _sendMessage({required String text, required String imageUrl, required String giphyUrl}) async {
     if ((text != null && text.trim().isNotEmpty) ||
         imageUrl != null ||
         giphyUrl != null) {
@@ -315,7 +315,7 @@ class _ChatScreenState extends State<ChatScreen> {
         imageUrl: imageUrl,
         giphyUrl: giphyUrl,
         timestamp: Timestamp.now(),
-        isLiked: false,
+        isLiked: false, id: '',
       );
 
       ChatService.sendChatMessage(_chat, message, widget.receiverUser);
@@ -356,7 +356,7 @@ class _ChatScreenState extends State<ChatScreen> {
   ) {
     List<MessageBubble> messageBubbles = [];
 
-    messages.data.documents.forEach((doc) {
+    messages.data?.documents.forEach((doc) {
       Message message = Message.fromDoc(doc);
       MessageBubble messageBubble = MessageBubble(
         user: message.senderId == _currentUser.id

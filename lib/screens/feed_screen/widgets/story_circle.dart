@@ -12,9 +12,9 @@ class StoryCircle extends StatefulWidget {
   final bool showUserName;
 
   StoryCircle({
-    @required this.userStories,
-    @required this.user,
-    @required this.currentUserId,
+    required this.userStories,
+    required this.user,
+    required this.currentUserId,
     this.size = 60,
     this.showUserName = true,
   });

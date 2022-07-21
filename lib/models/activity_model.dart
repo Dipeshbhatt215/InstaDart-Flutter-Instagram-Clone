@@ -16,18 +16,18 @@ class Activity {
   final Timestamp timestamp;
 
   Activity({
-    this.id,
-    this.fromUserId,
-    this.postId,
-    this.postImageUrl,
-    this.comment,
-    this.timestamp,
-    this.isFollowEvent,
-    this.isLikeEvent,
-    this.isMessageEvent,
-    this.isCommentEvent,
-    this.isLikeMessageEvent,
-    this.recieverToken,
+    required this.id,
+    required this.fromUserId,
+    required this.postId,
+    required this.postImageUrl,
+    required this.comment,
+    required this.timestamp,
+    required this.isFollowEvent,
+    required this.isLikeEvent,
+    required this.isMessageEvent,
+    required this.isCommentEvent,
+    required this.isLikeMessageEvent,
+    required this.recieverToken,
   });
 
   factory Activity.fromDoc(DocumentSnapshot doc) {

@@ -50,14 +50,14 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
   String _storyLocation = '';
   String _storyLink = '';
   int _storyDuration = 10;
-  Size _screenSize;
-  List<Container> _filterPages;
+  late Size _screenSize;
+  late List<Container> _filterPages;
 
   @override
   void dispose() {
-    _captionController?.dispose();
-    _locationController?.dispose();
-    _linkController?.dispose();
+    _captionController.dispose();
+    _locationController.dispose();
+    _linkController.dispose();
     super.dispose();
   }
 
@@ -133,7 +133,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
     });
   }
 
-  void _showEditStory({@required Function onSave, @required Widget widget}) {
+  void _showEditStory({required Function onSave, required Widget widget}) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
@@ -152,8 +152,8 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
                   SizedBox(height: 10),
                   FlatButton(
                       onPressed: () {
-                        if (_formKey.currentState.validate() && !_isLoading) {
-                          _formKey.currentState.save();
+                        if (_formKey.currentState?.validate() && !_isLoading) {
+                          _formKey.currentState?.save();
                           onSave();
                           Navigator.pop(context);
                         }
@@ -173,7 +173,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
 
   Align _displayLocationText() {
     return Align(
-      alignment: Alignment.lerp(Alignment.center, Alignment.bottomCenter, 0.6),
+   //  alignment: Alignment.lerp(Alignment.center, Alignment.bottomCenter, 0.6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -258,7 +258,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
 
   Align _displayStoryCaption() {
     return Align(
-      alignment: Alignment.lerp(Alignment.center, Alignment.bottomCenter, 0.4),
+    //  alignment: Alignment.lerp(Alignment.center, Alignment.bottomCenter, 0.4),
       child: Text(
         _storyCaption,
         textAlign: TextAlign.center,
@@ -482,7 +482,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
         location: _storyLocation,
         filter: _filterTitle,
         duration: _storyDuration,
-        linkUrl: _storyLink,
+        linkUrl: _storyLink, id: '',
       );
 
       await StoriesService.createStory(story);
