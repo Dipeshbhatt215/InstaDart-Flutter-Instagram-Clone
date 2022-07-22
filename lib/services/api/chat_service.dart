@@ -89,7 +89,7 @@ class ChatService {
     if (chatDocSnapshot.exists) {
       return Chat.fromDoc(chatDocSnapshot);
     }
-    return Chat();
+    return Chat(id: '', memberIds: [], memberInfo: [], readStatus: null, recentMessage: '', recentSender: '', recentTimestamp: null);
   }
 
   static Future<Chat> getChatByUsers(List<String> users) async {
@@ -109,7 +109,7 @@ class ChatService {
     return null;
   }
 
-  static Future<Null> likeUnlikeMessage(Message message, String chatId,
+  static Future<Null>? likeUnlikeMessage(Message message, String chatId,
       bool isLiked, User receiverUser, String currentUserId) {
     chatsRef
         .document(chatId)
@@ -118,12 +118,12 @@ class ChatService {
         .updateData({'isLiked': isLiked});
 
     Post post = Post(
-      authorId: receiverUser.id,
+      authorId: receiverUser.id, caption: '', commentsAllowed: null, id: '', imageUrl: '', likeCount: null, location: '', timestamp: null,
     );
 
     if (isLiked == true) {
       DatabaseService.addActivityItem(
-        comment: message.text ?? null,
+        comment: message.text!,
         currentUserId: currentUserId,
         isCommentEvent: false,
         isFollowEvent: false,
@@ -135,7 +135,7 @@ class ChatService {
       );
     } else {
       DatabaseService.deleteActivityItem(
-        comment: message.text ?? null,
+        comment: message.text! ,
         currentUserId: currentUserId,
         isFollowEvent: false,
         post: post,

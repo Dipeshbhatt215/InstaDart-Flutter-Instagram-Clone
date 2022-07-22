@@ -126,7 +126,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                       builder: (_) => CommentsScreen(
                         postStatus: PostStatus.feedPost,
                         post: post,
-                        likeCount: post.likeCount,
+                        likeCount: post.likeCount!,
                         author: widget.currentUser,
                       ),
                     ),

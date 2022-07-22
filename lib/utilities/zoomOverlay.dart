@@ -134,7 +134,7 @@ class _ZoomOverlayState extends State<ZoomOverlay>
 
     RenderObject? renderBox = context.findRenderObject();
     Offset focalPoint =
-        renderBox.globalToLocal(details.focalPoint - translationDelta);
+        renderBox!.globalToLocal(details.focalPoint - translationDelta);
 
     var dx = (1 - details.scale) * focalPoint.dx;
     var dy = (1 - details.scale) * focalPoint.dy;

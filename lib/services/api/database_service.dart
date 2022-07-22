@@ -444,15 +444,15 @@ class DatabaseService {
   }
 
   static void addActivityItem({
-    String currentUserId,
-    Post post,
-    String comment,
-    bool isFollowEvent,
-    bool isCommentEvent,
-    bool isLikeEvent,
-    bool isMessageEvent,
-    bool isLikeMessageEvent,
-    String recieverToken,
+    required String currentUserId,
+    required Post post,
+    required String comment,
+    required bool isFollowEvent,
+    required bool isCommentEvent,
+    required bool isLikeEvent,
+    required bool isMessageEvent,
+    required bool isLikeMessageEvent,
+    required String recieverToken,
   }) {
     if (currentUserId != post.authorId) {
       activitiesRef.document(post.authorId).collection('userActivities').add({
@@ -472,14 +472,14 @@ class DatabaseService {
   }
 
   static void deleteActivityItem(
-      {String currentUserId,
-      Post post,
-      String comment,
-      bool isFollowEvent,
-      bool isCommentEvent,
-      bool isLikeEvent,
-      bool isMessageEvent,
-      bool isLikeMessageEvent}) async {
+      {required String currentUserId,
+      required Post post,
+      required String comment,
+      required bool isFollowEvent,
+      required bool isCommentEvent,
+      required bool isLikeEvent,
+      required bool isMessageEvent,
+      required bool isLikeMessageEvent}) async {
     String boolCondition;
 
     if (isFollowEvent) {

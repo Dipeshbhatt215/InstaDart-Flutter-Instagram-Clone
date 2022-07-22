@@ -107,7 +107,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   height: 20,
                 ),
                 Image.file(
-                  widget.imageFile,
+                  widget.imageFile!,
                   height: 300,
                 ),
                 SizedBox(
@@ -126,7 +126,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     Navigator.pop(context);
 
                     String imageUrl = await StroageService.uploadMessageImage(
-                        widget.imageFile);
+                        widget.imageFile!);
                     _sendMessage(
                         text: null, imageUrl: imageUrl, giphyUrl: null);
                   },

@@ -13,7 +13,7 @@ class FilteredImageConverter {
   static Future<File> convert({required GlobalKey globalKey}) async {
     RenderObject? repaintBoundary =
         globalKey.currentContext!.findRenderObject();
-    ui.Image boxImage = await repaintBoundary?.toImage(pixelRatio: 1);
+    ui.Image boxImage = await repaintBoundary!.toImage(pixelRatio: 1);
     ByteData? byteData =
         await boxImage.toByteData(format: ui.ImageByteFormat.png);
     String tempPath = (await getTemporaryDirectory()).path;

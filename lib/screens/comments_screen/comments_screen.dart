@@ -93,7 +93,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
   _buildCommentTF() {
     String hintText;
     if (widget.postStatus == PostStatus.feedPost) {
-      if (widget.post.commentsAllowed) {
+      if (widget.post.commentsAllowed!) {
         hintText = 'Add a comment...';
       } else {
         hintText = 'Comment aren\'t allowed here...';
@@ -133,7 +133,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               child: AutoDirection(
                 text: _commentController.text,
                 child: TextField(
-                  enabled: widget.post.commentsAllowed &&
+                  enabled: widget.post.commentsAllowed! &&
                       widget.postStatus == PostStatus.feedPost,
                   controller: _commentController,
                   textCapitalization: TextCapitalization.sentences,
@@ -157,7 +157,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               child: IconButton(
                 icon: Icon(Icons.send),
                 onPressed: widget.postStatus != PostStatus.feedPost ||
-                        !widget.post.commentsAllowed
+                        !widget.post.commentsAllowed!
                     ? null
                     : () {
                         if (_isCommenting) {
@@ -190,7 +190,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
         authorId: widget.author.id,
         content: widget.post.caption,
         id: widget.post.id,
-        timestamp: widget.post.timestamp);
+        timestamp: widget.post.timestamp!);
 
     return Scaffold(
         appBar: AppBar(

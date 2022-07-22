@@ -1,12 +1,10 @@
-
-
 import 'package:flutter/services.dart';
 
 import 'package:location/location.dart';
 
 class LocationService {
   static Future<Address> getUserLocation() async {
-    LocationData currentLocation;
+    LocationData? currentLocation;
     String error;
     Location location = Location();
     try {

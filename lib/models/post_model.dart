@@ -4,10 +4,10 @@ class Post {
   final String id;
   final String imageUrl;
   final String caption;
-  final int likeCount;
+  final int? likeCount;
   final String authorId;
   final String location;
-  final Timestamp timestamp;
+  final Timestamp? timestamp;
   final bool? commentsAllowed;
 
   Post({

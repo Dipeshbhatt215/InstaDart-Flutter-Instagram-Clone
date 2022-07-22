@@ -274,7 +274,7 @@ class _CameraScreenState extends State<CameraScreen> {
   String timestamp() => new DateTime.now().millisecondsSinceEpoch.toString();
 
   void _captureImage() {
-    takePicture().then((String filePath) {
+    takePicture().then(( String filePath) {
       if (mounted) {
         setState(() {
           imagePath = filePath;

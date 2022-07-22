@@ -64,7 +64,7 @@ class AuthService {
   }
 
   static Future<void> removeToken() async {
-    final currentUser = await _auth.currentUser();
+    final currentUser = await _auth.currentUser!();
     await usersRef
         .document(currentUser.uid)
         .setData({'token': ''}, merge: true);

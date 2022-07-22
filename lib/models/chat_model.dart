@@ -5,7 +5,7 @@ class Chat {
   final String id;
   final String recentMessage;
   final String recentSender;
-  final Timestamp recentTimestamp;
+  final Timestamp? recentTimestamp;
   final List<dynamic> memberIds;
   final List<User> memberInfo;
   final dynamic readStatus;

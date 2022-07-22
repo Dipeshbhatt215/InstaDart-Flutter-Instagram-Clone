@@ -11,7 +11,7 @@ class Story {
   final String location;
   final String filter;
   final String linkUrl;
-  final int duration;
+  final int? duration;
 
   Story({
     required this.id,
