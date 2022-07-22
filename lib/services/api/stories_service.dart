@@ -24,7 +24,18 @@ class StoriesService {
     if (storyDocSnapshot.exists) {
       return Story.fromDoc(storyDocSnapshot);
     }
-    return Story();
+    return Story(
+        authorId: '',
+        caption: '',
+        duration: null,
+        filter: '',
+        id: '',
+        imageUrl: '',
+        linkUrl: '',
+        location: '',
+        timeEnd: null,
+        timeStart: null,
+        views: {});
   }
 
   static Future<List<Story>> getStoriesByUserId(

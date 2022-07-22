@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
+
 import 'package:instagram/services/core/location_service.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -7,8 +7,8 @@ class LocationForm extends StatefulWidget {
   final TextEditingController controller;
   final Size screenSize;
   LocationForm({
-    @required this.controller,
-    @required this.screenSize,
+    required this.controller,
+    required this.screenSize,
   });
   @override
   _LocationFormState createState() => _LocationFormState();
@@ -50,7 +50,7 @@ class _LocationFormState extends State<LocationForm> {
           ),
           title: Container(
             child: TextFormField(
-              validator: (input) => input.trim().length > 30
+              validator: (input) => input!.trim().length > 30
                   ? 'Please enter a location less than 30 characters'
                   : null,
               maxLength: 30,
@@ -109,7 +109,7 @@ class _LocationFormState extends State<LocationForm> {
 
   //method to build buttons with location.
   _buildLocationButton(String locationName) {
-    if (locationName != null ?? locationName.isNotEmpty) {
+    if (locationName != null) {
       return InkWell(
         onTap: () {
           widget.controller.text = locationName;

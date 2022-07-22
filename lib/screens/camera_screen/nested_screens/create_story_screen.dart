@@ -152,7 +152,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
                   SizedBox(height: 10),
                   FlatButton(
                       onPressed: () {
-                        if (_formKey.currentState?.validate() && !_isLoading) {
+                        if (_formKey.currentState!.validate() && !_isLoading) {
                           _formKey.currentState?.save();
                           onSave();
                           Navigator.pop(context);
@@ -214,7 +214,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
                   backgroundImage: _currentUser.profileImageUrl.isEmpty
                       ? AssetImage(placeHolderImageRef)
                       : CachedNetworkImageProvider(
-                          _currentUser.profileImageUrl),
+                          _currentUser.profileImageUrl) as ImageProvider,
                 ),
                 SizedBox(
                   width: 10.0,
@@ -268,7 +268,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
   }
 
   Align _displayEditStoryButtons(User currentuser) {
-    int _duration;
+    int? _duration;
     return Align(
       alignment: Alignment.topCenter,
       child: Padding(
@@ -348,7 +348,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
                     onTap: () => _showEditStory(
                         onSave: () {
                           setState(() {
-                            _storyDuration = _duration;
+                            _storyDuration = _duration!;
                           });
                         },
                         widget: DurationForm(

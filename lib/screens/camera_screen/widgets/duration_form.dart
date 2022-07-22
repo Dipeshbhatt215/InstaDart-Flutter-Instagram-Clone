@@ -8,16 +8,16 @@ class DurationForm extends StatefulWidget {
   final User currentUser;
 
   DurationForm(
-      {@required this.screenSize,
-      @required this.onChange,
-      @required this.duration,
-      @required this.currentUser});
+      {required this.screenSize,
+      required this.onChange,
+      required this.duration,
+      required this.currentUser});
   @override
   _DurationFormState createState() => _DurationFormState();
 }
 
 class _DurationFormState extends State<DurationForm> {
-  double _currentSliderValue;
+  late double _currentSliderValue;
   double _maxValue = 10;
 
   double _minValue = 5;

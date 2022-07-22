@@ -24,7 +24,7 @@ class ChatService {
     });
 
     return Chat(
-      id: res.documentID,
+      id: res.id,
       recentMessage: 'Chat Created',
       recentSender: '',
       recentTimestamp: timestamp,
@@ -40,12 +40,19 @@ class ChatService {
       'text': message.text,
       'imageUrl': message.imageUrl,
       'timestamp': message.timestamp,
-      'isLiked': message.isLiked ?? false,
+      'isLiked': message.isLiked,
       'giphyUrl': message.giphyUrl,
     });
 
     Post post = Post(
       authorId: receiverUser.id,
+      caption: '',
+      commentsAllowed: null,
+      id: '',
+      imageUrl: '',
+      likeCount: ,
+      location: '',
+      timestamp: null,
     );
 
     DatabaseService.addActivityItem(

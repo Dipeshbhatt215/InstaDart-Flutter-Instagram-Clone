@@ -118,7 +118,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
                   backgroundImage: user.profileImageUrl.isEmpty
                       ? AssetImage(placeHolderImageRef)
                       : CachedNetworkImageProvider(user.profileImageUrl),
-                ),
+                ) as ,
                 SizedBox(
                   height: 30,
                 ),

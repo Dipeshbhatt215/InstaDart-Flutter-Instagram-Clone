@@ -7,10 +7,10 @@ class CustomTextForm extends StatelessWidget {
   final int maxLength;
 
   CustomTextForm({
-    @required this.controller,
-    @required this.screenSize,
-    @required this.hintText,
-    @required this.maxLength,
+    required this.controller,
+    required this.screenSize,
+    required this.hintText,
+    required this.maxLength,
   });
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class CustomTextForm extends StatelessWidget {
             Container(
               width: screenSize.width - 20,
               child: TextFormField(
-                validator: (input) => input.trim().length > maxLength
+                validator: (input) => input!.trim().length > maxLength
                     ? 'Please enter a $hintText less than $maxLength characters'
                     : null,
                 maxLength: maxLength,

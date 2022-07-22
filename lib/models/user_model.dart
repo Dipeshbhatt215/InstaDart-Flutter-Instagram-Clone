@@ -7,7 +7,7 @@ class User {
   final String email;
   final String bio;
   final String token;
-  final bool isBanned;
+  final bool? isBanned;
   // final List<String> favoritePosts;
   // final List<String> blockedUsers;
   // final List<String> hideStoryFromUsers;
@@ -15,8 +15,8 @@ class User {
   // final bool allowStoryMessageReplies;
   final String role;
   final bool isVerified;
-  final String website;
-  final Timestamp timeCreated;
+  final String? website;
+  final Timestamp? timeCreated;
 
   User({
     required this.id,
@@ -25,16 +25,16 @@ class User {
     required this.email,
    required this.bio,
   required  this.token,
-  required  this.isBanned,
+    this.isBanned,
   required  this.isVerified,
-  required  this.website,
+   this.website,
   required  this.role,
    required this.timeCreated,
   });
 
   factory User.fromDoc(DocumentSnapshot doc) {
     return User(
-      id: doc.documentID,
+      id: doc.id,
       name: doc['name'],
       profileImageUrl: doc['profileImageUrl'],
       email: doc['email'],

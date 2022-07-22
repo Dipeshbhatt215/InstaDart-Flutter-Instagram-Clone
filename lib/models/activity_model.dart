@@ -32,7 +32,7 @@ class Activity {
 
   factory Activity.fromDoc(DocumentSnapshot doc) {
     return Activity(
-      id: doc.documentID,
+      id: doc.id,
       fromUserId: doc['fromUserId'],
       postId: doc['postId'],
       postImageUrl: doc['postImageUrl'],

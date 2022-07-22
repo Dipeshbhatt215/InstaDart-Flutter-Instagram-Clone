@@ -35,7 +35,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     super.initState();
     _name = widget.user.name;
     _bio = widget.user.bio;
-    _website = widget.user.website;
+    _website = widget.user.website!;
   }
 
   _handleImageFromGallery() async {
@@ -50,8 +50,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   _submit() async {
-    if (_formKey.currentState.validate() && !_isLoading) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate() && !_isLoading) {
+      _formKey.currentState!.save();
 
       setState(() => _isLoading = true);
       String url;
@@ -83,7 +83,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           bio: _bio.trim(),
           role: widget.user.role,
           isVerified: widget.user.isVerified,
-          website: url, email: '', isBanned: null, timeCreated: null, token: '');
+         email: '', isBanned: null, timeCreated: null, token: '');
 
       //Database Update
       DatabaseService.updateUser(user);
@@ -159,7 +159,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             size: 30.0,
                           ),
                           labelText: 'Name'),
-                      validator: (input) => input?.trim().length < 1
+                      validator: (input) => input!.trim().length < 1
                           ? 'Please enter a valid name'
                           : input.trim().length > 20
                               ? 'Please enter name less than 20 characters'
@@ -178,7 +178,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             size: 30.0,
                           ),
                           labelText: 'Bio'),
-                      validator: (input) => input?.trim().length > 150
+                      validator: (input) => input!.trim().length > 150
                           ? 'Please enter a bio less than 150 characters'
                           : null,
                       onSaved: (input) => _bio = input!,

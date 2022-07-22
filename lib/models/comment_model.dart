@@ -15,7 +15,7 @@ class Comment {
 
   factory Comment.fromDoc(DocumentSnapshot doc) {
     return Comment(
-      id: doc.documentID,
+      id: doc.id,
       content: doc['content'],
       authorId: doc['authorId'],
       timestamp: doc['timestamp'],

@@ -20,6 +20,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:http/http.dart';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_share/flutter_share.dart';
 
 class PostView extends StatefulWidget {
   final String currentUserId;
@@ -28,7 +29,10 @@ class PostView extends StatefulWidget {
   final PostStatus postStatus;
 
   PostView(
-      {required this.currentUserId, required this.post, required this.author, required this.postStatus});
+      {required this.currentUserId,
+      required this.post,
+      required this.author,
+      required this.postStatus});
 
   @override
   _PostViewState createState() => _PostViewState();
@@ -38,7 +42,7 @@ class _PostViewState extends State<PostView> {
   int _likeCount = 0;
   bool _isLiked = false;
   bool _heartAnim = false;
-  Post _post;
+  late Post _post;
 
   @override
   void initState() {
@@ -108,6 +112,7 @@ class _PostViewState extends State<PostView> {
       MaterialPageRoute(
           builder: (_) => HomeScreen(
                 currentUserId: widget.currentUserId,
+                cameras: [],
               )),
       (Route<dynamic> route) => false,
     );
@@ -120,16 +125,16 @@ class _PostViewState extends State<PostView> {
   _saveAndShareFile() async {
     final RenderObject? box = context.findRenderObject();
 
-    var response = await get(widget.post.imageUrl);
-    final documentDirectory = (await getExternalStorageDirectory()).path;
-    File imgFile = new File('$documentDirectory/${widget.post.id}.png');
+    var response = await get(Uri.parse(widget.post.imageUrl));
+    final documentDirectory = await getExternalStorageDirectory();
+    File imgFile = new File('${documentDirectory!.path}/${widget.post.id}.png');
     imgFile.writeAsBytesSync(response.bodyBytes);
 
-   
-    Share.shareFiles([imgFile.path],
-        subject: 'Have a look at ${widget.author.name} post!',
-        text: '${widget.author.name} : ${widget.post.caption}',
-        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+    FlutterShare.shareFile(
+      filePath: imgFile.path,
+      title: 'Have a look at ${widget.author.name} post!',
+      text: '${widget.author.name} : ${widget.post.caption}',
+    );
   }
 
   _iosBottomSheet() {
@@ -224,18 +229,18 @@ class _PostViewState extends State<PostView> {
               _post.authorId == widget.currentUserId &&
                       widget.postStatus == PostStatus.feedPost
                   ? SimpleDialogOption(
-                      child: Text(_post.commentsAllowed
+                      child: Text(_post.commentsAllowed!
                           ? 'Turn off commenting'
                           : 'Allow comments'),
                       onPressed: () {
                         DatabaseService.allowDisAllowPostComments(
-                            _post, !_post.commentsAllowed);
+                            _post, !_post.commentsAllowed!);
                         Navigator.pop(context);
                         setState(() {
                           _post = new Post(
                               authorId: widget.post.authorId,
                               caption: widget.post.caption,
-                              commentsAllowed: !_post.commentsAllowed,
+                              commentsAllowed: !_post.commentsAllowed!,
                               id: _post.id,
                               imageUrl: _post.imageUrl,
                               likeCount: _post.likeCount,
@@ -275,7 +280,7 @@ class _PostViewState extends State<PostView> {
                     ? AssetImage(placeHolderImageRef)
                     : CachedNetworkImageProvider(
                         widget.author.profileImageUrl,
-                      ),
+                      ) as ImageProvider,
               ),
             ),
             title: GestureDetector(
@@ -305,6 +310,7 @@ class _PostViewState extends State<PostView> {
                   height: MediaQuery.of(context).size.width,
                   child: ZoomOverlay(
                       twoTouchOnly: true,
+                      key: null,
                       child: CachedNetworkImage(
                           fadeInDuration: Duration(milliseconds: 500),
                           imageUrl: _post.imageUrl))),

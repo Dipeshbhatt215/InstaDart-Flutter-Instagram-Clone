@@ -91,7 +91,7 @@ class _StoryCircleState extends State<StoryCircle> {
                 child: Image(
                   image: widget.user.profileImageUrl.isEmpty
                       ? AssetImage(placeHolderImageRef)
-                      : CachedNetworkImageProvider(widget.user.profileImageUrl),
+                      : CachedNetworkImageProvider(widget.user.profileImageUrl) as ImageProvider,
                   height: widget.size,
                   width: widget.size,
                   fit: BoxFit.cover,

@@ -60,7 +60,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
           backgroundColor: Colors.grey,
           backgroundImage: author.profileImageUrl.isEmpty
               ? AssetImage(placeHolderImageRef)
-              : CachedNetworkImageProvider(author.profileImageUrl),
+              : CachedNetworkImageProvider(author.profileImageUrl)as ImageProvider,
         ),
       ),
       title: GestureDetector(
@@ -125,7 +125,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     backgroundColor: Colors.grey,
                     backgroundImage: profileImageUrl.isEmpty
                         ? AssetImage(placeHolderImageRef)
-                        : CachedNetworkImageProvider(profileImageUrl),
+                        : CachedNetworkImageProvider(profileImageUrl)as ImageProvider,
                   )
                 : SizedBox.shrink(),
             SizedBox(width: 20.0),

@@ -8,7 +8,7 @@ class Post {
   final String authorId;
   final String location;
   final Timestamp timestamp;
-  final bool commentsAllowed;
+  final bool? commentsAllowed;
 
   Post({
     required this.id,
@@ -23,7 +23,7 @@ class Post {
 
   factory Post.fromDoc(DocumentSnapshot doc) {
     return Post(
-      id: doc.documentID,
+      id: doc.id,
       imageUrl: doc['imageUrl'],
       caption: doc['caption'],
       likeCount: doc['likeCount'],

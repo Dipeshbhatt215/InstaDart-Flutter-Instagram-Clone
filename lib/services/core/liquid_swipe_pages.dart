@@ -5,9 +5,9 @@ import 'package:instagram/utilities/filters.dart';
 
 class LiquidSwipePagesService {
   static List<Container> getImageFilteredPaged(
-      {@required File imageFile,
-      @required double height,
-      @required double width}) {
+      {required File imageFile,
+      required double height,
+      required double width}) {
     final Image image = Image.file(
       imageFile,
       fit: BoxFit.cover,

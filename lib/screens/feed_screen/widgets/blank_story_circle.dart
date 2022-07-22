@@ -45,7 +45,7 @@ class BlankStoryCircle extends StatelessWidget {
                     child: Image(
                       image: user.profileImageUrl.isEmpty
                           ? AssetImage(placeHolderImageRef)
-                          : CachedNetworkImageProvider(user.profileImageUrl),
+                          : CachedNetworkImageProvider(user.profileImageUrl) as ImageProvider,
                       height: 60.0,
                       width: 60.0,
                       fit: BoxFit.cover,

@@ -22,7 +22,7 @@ class Chat {
 
   factory Chat.fromDoc(DocumentSnapshot doc) {
     return Chat(
-      id: doc.documentID,
+      id: doc.id,
       recentMessage: doc['recentMessage'],
       recentSender: doc['recentSender'],
       recentTimestamp: doc['recentTimestamp'],

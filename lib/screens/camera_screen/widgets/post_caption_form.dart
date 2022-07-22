@@ -10,11 +10,11 @@ class PostCaptionForm extends StatefulWidget {
   final Size screenSize;
   final Function onChanged;
   PostCaptionForm({
-    @required this.imageFile,
-    @required this.imageUrl,
-    @required this.controller,
-    @required this.screenSize,
-    @required this.onChanged,
+    required this.imageFile,
+    required this.imageUrl,
+    required this.controller,
+    required this.screenSize,
+    required this.onChanged,
   });
   @override
   _PostCaptionFormState createState() => _PostCaptionFormState();
@@ -38,7 +38,7 @@ class _PostCaptionFormState extends State<PostCaptionForm> {
                   alignment: FractionalOffset.topCenter,
                   image: widget.imageFile == null
                       ? CachedNetworkImageProvider(widget.imageUrl)
-                      : FileImage(widget.imageFile),
+                      : FileImage(widget.imageFile) as ImageProvider,
                 ),
               ),
             ),
@@ -50,7 +50,7 @@ class _PostCaptionFormState extends State<PostCaptionForm> {
             padding: const EdgeInsets.only(top: 10),
             child: TextFormField(
               onChanged: (value) => widget.onChanged(value),
-              validator: (input) => input.trim().length > 150
+              validator: (input) => input!.trim().length > 150
                   ? 'Please enter a caption less than 150 characters'
                   : input.trim().length < 3
                       ? 'Please enter a caption more than 3 characters'

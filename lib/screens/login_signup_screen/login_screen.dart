@@ -13,13 +13,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _email, _password;
+  late String _email, _password;
   bool _isLoading = false;
 
   _submit() async {
     FocusScope.of(context).unfocus();
 
-    if (_formKey.currentState?.validate()) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         await AuthService.loginUser(_email.trim(), _password.trim());
       } on PlatformException catch (err) {
-        _showErrorDialog(err.message);
+        _showErrorDialog(err.message!);
         setState(() {
           _isLoading = false;
         });
@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             horizontal: 30.0, vertical: 10.0),
                         child: TextFormField(
                           decoration: InputDecoration(labelText: 'Email'),
-                          validator: (input) => !input?.contains('@')
+                          validator: (input) => !input!.contains('@')
                               ? 'Please enter a valid email'
                               : null,
                           onSaved: (input) => _email = input!,
@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextFormField(
                           decoration: InputDecoration(labelText: 'Password'),
                           obscureText: true,
-                          validator: (input) => input?.length < 6
+                          validator: (input) => input!.length < 6
                               ? 'Password must be at least 6 characters'
                               : null,
                           onSaved: (input) => _password = input!,

@@ -10,8 +10,8 @@ import 'package:instagram/models/models.dart';
 
 class AuthService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
-  static final Firestore _firestore = Firestore.instance;
-  static final FirebaseMessaging _messaging = FirebaseMessaging();
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  static final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
   static Future<void> signUpUser(
       BuildContext context, String name, String email, String password) async {
@@ -22,7 +22,7 @@ class AuthService {
       );
       FirebaseUser signedInUser = authResult.user;
       if (signedInUser != null) {
-        String token = await _messaging.getToken();
+        String? token = await _messaging.getToken();
         _firestore.collection('/users').document(signedInUser.uid).setData({
           'name': name,
           'email': email,
@@ -71,7 +71,7 @@ class AuthService {
   }
 
   static Future<void> updateToken() async {
-    final currentUser = await _auth.currentUser();
+    final currentUser = await _auth.currentUser!();
     final token = await _messaging.getToken();
     final userDoc = await usersRef.document(currentUser.uid).get();
     if (userDoc.exists) {

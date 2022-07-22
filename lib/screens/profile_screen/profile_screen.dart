@@ -19,7 +19,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ProfileScreen extends StatefulWidget {
   final String userId;
   final String currentUserId;
-  final Function onProfileEdited;
+  final Function? onProfileEdited;
   final bool isCameFromBottomNavigation;
   final Function goToCameraScreen;
 
@@ -162,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 bio: updateUser.bio,
                                 isVerified: updateUser.isVerified,
                                 role: updateUser.role,
-                                website: updateUser.website,
+                                website: updateUser.website, timeCreated: null, token: '',
                               );
 
                               setState(() {
@@ -171,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 _profileUser = updatedUser;
                               });
                               AuthService.updateTokenWithUser(updatedUser);
-                              widget.onProfileEdited();
+                              widget.onProfileEdited!();
                             }),
                       ),
                     ),
@@ -204,7 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (_) => ChatScreen(
-                                receiverUser: _profileUser,
+                                receiverUser: _profileUser, imageFile: null,
                               ))),
                   color: Colors.blue,
                   textColor: Colors.white,
@@ -353,13 +353,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               if (user.website != '') SizedBox(height: 5.0),
               if (user.website != '')
                 GestureDetector(
-                  onTap: () => _goToUrl(user.website),
+                  onTap: () => _goToUrl(user.website!),
                   child: Container(
                     height: 18,
                     width: double.infinity,
                     child: Text(
                       user.website
-                          .replaceAll('https://', '')
+                          !.replaceAll('https://', '')
                           .replaceAll('http://', '')
                           .replaceAll('www.', ''),
                       style: kBlueColorTextStyle,

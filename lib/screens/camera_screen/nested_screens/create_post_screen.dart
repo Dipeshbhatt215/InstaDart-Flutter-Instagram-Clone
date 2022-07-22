@@ -15,13 +15,13 @@ import 'package:instagram/models/models.dart';
 import 'package:instagram/services/services.dart';
 
 class CreatePostScreen extends StatefulWidget {
-  final Post post;
-  final PostStatus postStatus;
-  final File imageFile;
+  final Post? post;
+  final PostStatus? postStatus;
+  final File? imageFile;
   CreatePostScreen({
     required this.post,
     required this.postStatus,
-    required this.imageFile,
+    this.imageFile,
   });
 
   @override
@@ -50,12 +50,12 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     });
     if (widget.post != null) {
       setState(() {
-        _captionController.value = TextEditingValue(text: widget.post.caption);
+        _captionController.value = TextEditingValue(text: widget.post!.caption);
         _locationController.value =
-            TextEditingValue(text: widget.post.location);
-        _caption = widget.post.caption;
+            TextEditingValue(text: widget.post!.location);
+        _caption = widget.post!.caption;
 
-        _post = widget.post;
+        _post = widget.post!;
       });
     }
   }
@@ -71,7 +71,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     FocusScope.of(context).unfocus();
 
     if (!_isLoading &&
-        _formKey.currentState?.validate() &&
+        _formKey.currentState!.validate() &&
         (widget.imageFile != null || _post.imageUrl != null)) {
       _formKey.currentState?.save();
 
@@ -94,10 +94,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           commentsAllowed: _post.commentsAllowed,
         );
 
-        DatabaseService.editPost(post, widget.postStatus);
+        DatabaseService.editPost(post, widget.postStatus!);
       } else {
         //Create new Post
-        String imageUrl = await StroageService.uploadPost(widget.imageFile);
+        String imageUrl = await StroageService.uploadPost(widget.imageFile!);
         Post post = Post(
           imageUrl: imageUrl,
           caption: _captionController.text,
@@ -105,7 +105,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
           likeCount: 0,
           authorId: _currentUserId,
           timestamp: Timestamp.fromDate(DateTime.now()),
-          commentsAllowed: true, id: '',
+          commentsAllowed: true,
+          id: '',
         );
 
         DatabaseService.createPost(post);
@@ -162,7 +163,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   screenSize: screenSize,
                   imageUrl: _post.imageUrl,
                   controller: _captionController,
-                  imageFile: widget.imageFile,
+                  imageFile: widget.imageFile!,
                   onChanged: (val) {
                     setState(() {
                       _caption = val;

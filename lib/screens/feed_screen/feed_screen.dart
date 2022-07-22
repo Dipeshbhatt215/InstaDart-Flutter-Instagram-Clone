@@ -13,12 +13,12 @@ import 'package:provider/provider.dart';
 
 class FeedScreen extends StatefulWidget {
   static final String id = 'feed_screen';
-  final String currentUserId;
-  final Function goToDirectMessages;
-  final Function goToCameraScreen;
+  final String ?currentUserId;
+  final Function ?goToDirectMessages;
+  final Function ?goToCameraScreen;
 
   FeedScreen(
-      {required this.currentUserId, required this.goToDirectMessages, required this.goToCameraScreen});
+      { this.currentUserId,  this.goToDirectMessages,  this.goToCameraScreen});
   @override
   _FeedScreenState createState() => _FeedScreenState();
 }
@@ -41,7 +41,7 @@ class _FeedScreenState extends State<FeedScreen> {
     setState(() => _isLoadingFeed = true);
 
     List<Post> posts = await DatabaseService.getFeedPosts(
-      widget.currentUserId,
+      widget.currentUserId!,
     );
 
     // List<Post> posts = await DatabaseService.getAllFeedPosts();
@@ -56,7 +56,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
     // Get currentUser followingUsers
     List<User> followingUsers =
-        await DatabaseService.getUserFollowingUsers(widget.currentUserId);
+        await DatabaseService.getUserFollowingUsers(widget.currentUserId!);
 
     if (!mounted) return;
     User currentUser =
@@ -136,7 +136,7 @@ class _FeedScreenState extends State<FeedScreen> {
                             ),
                           )
                         : StoriesWidget(_followingUsersWithStories,
-                            widget.goToCameraScreen),
+                            widget.goToCameraScreen!),
                     SizedBox(height: 5),
                     ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
@@ -168,7 +168,7 @@ class _FeedScreenState extends State<FeedScreen> {
 
                             return PostView(
                               postStatus: PostStatus.feedPost,
-                              currentUserId: widget.currentUserId,
+                              currentUserId: widget.currentUserId!,
                               author: author,
                               post: post,
                             );

@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
   final String currentUserId;
   final int initialPage;
   final List<CameraDescription> cameras;
-  HomeScreen({this.currentUserId, this.initialPage = 1, this.cameras});
+  HomeScreen({required this.currentUserId, this.initialPage = 1, required this.cameras});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -29,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
   int _currentPage = 0;
   int _lastTab = 0;
-  PageController _pageController;
-  User _currentUser;
+  late PageController _pageController;
+  late User _currentUser;
   late List<CameraDescription> _cameras;
   CameraConsumer _cameraConsumer = CameraConsumer.post;
 

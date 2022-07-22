@@ -55,7 +55,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
             backgroundColor: Colors.grey,
             backgroundImage: user.profileImageUrl.isEmpty
                 ? AssetImage(placeHolderImageRef)
-                : CachedNetworkImageProvider(user.profileImageUrl),
+                : CachedNetworkImageProvider(user.profileImageUrl) as ImageProvider,
           ),
           title: activity.isFollowEvent == true
               ? Row(

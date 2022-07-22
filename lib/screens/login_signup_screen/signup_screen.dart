@@ -19,7 +19,7 @@ class _SignupScreenState extends State<SignupScreen> {
   _submit() async {
     FocusScope.of(context).unfocus();
 
-    if (_formKey.currentState?.validate()) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
@@ -29,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
         await AuthService.signUpUser(
             context, _name.trim(), _email.trim(), _password.trim());
       } on PlatformException catch (err) {
-        _showErrorDialog(err.message);
+        _showErrorDialog(err.message!);
         setState(() {
           _isLoading = false;
         });
@@ -79,7 +79,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             horizontal: 30.0, vertical: 10.0),
                         child: TextFormField(
                           decoration: InputDecoration(labelText: 'Name'),
-                          validator: (input) => input?.trim().isEmpty
+                          validator: (input) => input!.trim().isEmpty
                               ? 'Please enter a valid name'
                               : null,
                           onSaved: (input) => _name = input!,
@@ -92,7 +92,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           decoration: InputDecoration(
                             labelText: 'Email',
                           ),
-                          validator: (input) => !input.contains('@')
+                          validator: (input) => !input!.contains('@')
                               ? 'Please enter a valid email'
                               : null,
                           onSaved: (input) => _email = input!,
@@ -104,7 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         child: TextFormField(
                           decoration: InputDecoration(labelText: 'Password'),
                           obscureText: true,
-                          validator: (input) => input.length < 6
+                          validator: (input) => input!.length < 6
                               ? 'Password must be at least 6 characters'
                               : null,
                           onSaved: (input) => _password = input!,

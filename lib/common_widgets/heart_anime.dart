@@ -6,7 +6,7 @@ class HeartAnime extends StatelessWidget {
   HeartAnime(this.size);
   @override
   Widget build(BuildContext context) {
-    return Animator(
+    return Animator<double>(
       duration: Duration(milliseconds: 300),
       tween: Tween(begin: 0.5, end: 1.4),
       curve: Curves.elasticOut,

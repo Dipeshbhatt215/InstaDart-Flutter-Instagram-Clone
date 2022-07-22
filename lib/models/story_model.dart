@@ -29,7 +29,7 @@ class Story {
 
   factory Story.fromDoc(DocumentSnapshot doc) {
     return Story(
-      id: doc.documentID,
+      id: doc.id,
       timeStart: doc['timeStart'],
       timeEnd: doc['timeEnd'],
       authorId: doc['authorId'],

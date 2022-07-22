@@ -6,10 +6,10 @@ import 'package:instagram/utilities/show_error_dialog.dart';
 
 class CustomNavigation {
   static void navigateToUserProfile({
-    BuildContext context,
-    bool isCameFromBottomNavigation,
-    String currentUserId,
-    String userId,
+    required BuildContext context,
+    required bool isCameFromBottomNavigation,
+    required String currentUserId,
+    required String userId,
   }) {
     Navigator.push(
       context,
@@ -19,7 +19,7 @@ class CustomNavigation {
           currentUserId: currentUserId,
           userId: userId,
           goToCameraScreen: () =>
-              navigateToHomeScreen(context, currentUserId, initialPage: 0),
+              navigateToHomeScreen(context, currentUserId, initialPage: 0), onProfileEdited: null,
         ),
       ),
     );
@@ -68,7 +68,7 @@ class CustomNavigation {
         MaterialPageRoute(
           builder: (_) => HomeScreen(
             currentUserId: currentUserId,
-            initialPage: initialPage,
+            initialPage: initialPage, cameras: [],
           ),
         ),
         (Route<dynamic> route) => false,

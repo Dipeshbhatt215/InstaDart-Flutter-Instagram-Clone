@@ -156,7 +156,7 @@ class _EditPhotoScreenState extends State<EditPhotoScreen>
 
   void convertFilteredImageToImageFile() async {
     File file = await FilteredImageConverter.convert(globalKey: _globalKey);
-    Navigator.of(_globalKey.currentContext).push(
+    Navigator.of(_globalKey.currentContext!).push(
       MaterialPageRoute(
         builder: (context) => CreatePostScreen(
           imageFile: file, post: null, postStatus: null,

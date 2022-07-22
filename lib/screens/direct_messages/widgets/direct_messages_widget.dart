@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 
 class DirectMessagesWidget extends StatefulWidget {
   final SearchFrom searchFrom;
-  final File imageFile;
+  final File? imageFile;
   DirectMessagesWidget({required this.searchFrom, required this.imageFile});
   @override
   _DirectMessagesWidgetState createState() => _DirectMessagesWidgetState();
@@ -36,7 +36,8 @@ class _DirectMessagesWidgetState extends State<DirectMessagesWidget> {
   }
 
   Stream<List<Chat>> getChats() async* {
-    List<Chat> dataToReturn = List();
+    
+    List<Chat> dataToReturn = [];
 
     Stream<QuerySnapshot> stream = Firestore.instance
         .collection('chats')
@@ -99,7 +100,7 @@ class _DirectMessagesWidgetState extends State<DirectMessagesWidget> {
           backgroundImage: users[receiverIndex].profileImageUrl.isEmpty
               ? AssetImage(placeHolderImageRef)
               : CachedNetworkImageProvider(
-                  users[receiverIndex].profileImageUrl),
+                  users[receiverIndex].profileImageUrl) as ImageProvider,
         ),
         title: Row(
           children: [
@@ -121,7 +122,7 @@ class _DirectMessagesWidgetState extends State<DirectMessagesWidget> {
               MaterialPageRoute(
                 builder: (_) => ChatScreen(
                   receiverUser: users[receiverIndex],
-                  imageFile: widget.imageFile,
+                  imageFile: widget.imageFile!,
                 ),
               ),
             ),
@@ -137,7 +138,7 @@ class _DirectMessagesWidgetState extends State<DirectMessagesWidget> {
         backgroundImage: users[receiverIndex].profileImageUrl.isEmpty
             ? AssetImage(placeHolderImageRef)
             : CachedNetworkImageProvider(users[receiverIndex].profileImageUrl),
-      ),
+      ) ,
       title: Row(
         children: [
           Text(
@@ -201,7 +202,7 @@ class _DirectMessagesWidgetState extends State<DirectMessagesWidget> {
                   MaterialPageRoute(
                       builder: (_) => SearchScreen(
                             searchFrom: widget.searchFrom,
-                            imageFile: widget.imageFile,
+                            imageFile: widget.imageFile!,
                           ))),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),

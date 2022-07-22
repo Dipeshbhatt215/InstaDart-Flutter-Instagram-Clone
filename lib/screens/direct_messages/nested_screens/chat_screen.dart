@@ -19,7 +19,7 @@ import 'package:giphy_get/giphy_get.dart';
 
 class ChatScreen extends StatefulWidget {
   final User receiverUser;
-  final File imageFile;
+  final File? imageFile;
 
   const ChatScreen({required this.receiverUser, required this.imageFile});
   @override
@@ -27,6 +27,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+ 
   final TextEditingController _messageController = TextEditingController();
   bool _isComposingMessage = false;
   late Chat _chat;
@@ -186,7 +187,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 PickedFile? pickedFile = await ImagePicker().getImage(
                   source: ImageSource.camera,
                 );
-                File imageFile = File(pickedFile.path);
+                File imageFile = File(pickedFile!.path);
 
                 if (imageFile != null) {
                   String imageUrl =
@@ -236,7 +237,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         PickedFile? pickedFile = await ImagePicker().getImage(
                           source: ImageSource.gallery,
                         );
-                        File imageFile = File(pickedFile.path);
+                        File imageFile = File(pickedFile!.path);
 
                         if (imageFile != null) {
                           String imageUrl =
@@ -256,14 +257,14 @@ class _ChatScreenState extends State<ChatScreen> {
                         onPressed: () async {
                           GiphyGif? gif = await GiphyGet.getGif(
                             context: context,
-                            apiKey: kGiphyApiKey, //YOUR API KEY HERE
+                           apiKey: giphyApiKey, //YOUR API KEY HERE
                             lang: GiphyLanguage.spanish,
                           );
                           if (gif != null && mounted) {
                             _sendMessage(
                                 text: null,
                                 imageUrl: null,
-                                giphyUrl: gif.images.original.url);
+                                giphyUrl: gif.images!.original!.url);
                           }
                         },
                         tooltip: 'Open Sticker',
@@ -294,7 +295,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  _sendMessage({required String text, required String imageUrl, required String giphyUrl}) async {
+  _sendMessage({required String? text, required String? imageUrl, required String? giphyUrl}) async {
     if ((text != null && text.trim().isNotEmpty) ||
         imageUrl != null ||
         giphyUrl != null) {
@@ -313,7 +314,7 @@ class _ChatScreenState extends State<ChatScreen> {
         senderId: _currentUser.id,
         text: text,
         imageUrl: imageUrl,
-        giphyUrl: giphyUrl,
+        giphyUrl: giphyUrl!,
         timestamp: Timestamp.now(),
         isLiked: false, id: '',
       );
@@ -331,7 +332,7 @@ class _ChatScreenState extends State<ChatScreen> {
           .orderBy('timestamp', descending: true)
           .limit(20)
           .snapshots(),
-      builder: (BuildContext contex, AsyncSnapshot snapshot) {
+      builder: (BuildContext contex, AsyncSnapshot<dynamic> snapshot) {
         if (!snapshot.hasData) {
           return SizedBox.shrink();
         }
@@ -356,7 +357,7 @@ class _ChatScreenState extends State<ChatScreen> {
   ) {
     List<MessageBubble> messageBubbles = [];
 
-    messages.data?.documents.forEach((doc) {
+    messages.data.documents.forEach((doc) {
       Message message = Message.fromDoc(doc);
       MessageBubble messageBubble = MessageBubble(
         user: message.senderId == _currentUser.id
@@ -398,7 +399,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   backgroundImage: widget.receiverUser.profileImageUrl.isEmpty
                       ? AssetImage(placeHolderImageRef)
                       : CachedNetworkImageProvider(
-                          widget.receiverUser.profileImageUrl),
+                          widget.receiverUser.profileImageUrl) as ImageProvider,
                 ),
               ),
               SizedBox(width: 15.0),

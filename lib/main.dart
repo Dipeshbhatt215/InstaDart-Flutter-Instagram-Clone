@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fuser ;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instagram/models/models.dart';
@@ -49,8 +49,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget _getScreenId() {
-    return StreamBuilder<FirebaseUser>(
-      stream: FirebaseAuth.instance.onAuthStateChanged,
+    return StreamBuilder<fuser.User?>(
+      stream: fuser.FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting ||
             !_isTimerDone) {
@@ -58,9 +58,9 @@ class _MyAppState extends State<MyApp> {
         }
         if (snapshot.hasData && _isTimerDone) {
           Provider.of<UserData>(context, listen: false).currentUserId =
-              snapshot.data.uid;
+              snapshot.data!.uid;
           return HomeScreen(
-            currentUserId: snapshot.data.uid,
+            currentUserId: snapshot.data!.uid, cameras: [],
           );
         } else {
           return LoginScreen();
@@ -75,6 +75,7 @@ class _MyAppState extends State<MyApp> {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       title: 'InstaDart',
+      
       debugShowCheckedModeBanner: false,
       theme: themeNotifier.getTheme(),
       home: _getScreenId(),
