@@ -4,7 +4,7 @@ import 'package:instagram/utilities/constants.dart';
 
 class StoriesService {
   static Future<void> createStory(Story story) async {
-    storiesRef.document(story.authorId).collection('stories').add({
+    storiesRef.doc(story.authorId).collection('stories').add({
       'timeStart': story.timeStart,
       'timeEnd': story.timeEnd,
       'authorId': story.authorId,
@@ -20,7 +20,7 @@ class StoriesService {
 
   static Future<Story> getStoryById(String storyId) async {
     DocumentSnapshot storyDocSnapshot =
-        await storiesRef.document(storyId).get();
+        await storiesRef.doc(storyId).get();
     if (storyDocSnapshot.exists) {
       return Story.fromDoc(storyDocSnapshot);
     }
@@ -38,7 +38,7 @@ class StoriesService {
         views: {});
   }
 
-  static Future<List<Story>> getStoriesByUserId(
+  static Future<List<Story>?> getStoriesByUserId(
       String userId, bool checkDate) async {
     final Timestamp timeNow = Timestamp.now();
 
@@ -47,19 +47,19 @@ class StoriesService {
 
     if (checkDate) {
       snapshot = await storiesRef
-          .document(userId)
+          .doc(userId)
           .collection('stories')
           .where('timeEnd', isGreaterThanOrEqualTo: timeNow)
-          .getDocuments();
+          .get();
     } else {
       snapshot = await storiesRef
-          .document(userId)
+          .doc(userId)
           .collection('stories')
-          .getDocuments();
+          .get();
     }
 
-    if (snapshot.documents.isNotEmpty) {
-      for (var doc in snapshot.documents) {
+    if (snapshot.docs.isNotEmpty) {
+      for (var doc in snapshot.docs) {
         Story story = Story.fromDoc(doc);
         userStories.add(story);
       }
@@ -74,19 +74,19 @@ class StoriesService {
     storyViews[currentUserId] = timestamp;
 
     DocumentSnapshot storySnapshot = await storiesRef
-        .document(story.authorId)
+        .doc(story.authorId)
         .collection('stories')
-        .document(story.id)
+        .doc(story.id)
         .get();
 
     Story storyFromDoc = Story.fromDoc(storySnapshot);
 
     if (!storyFromDoc.views.containsKey(currentUserId)) {
       await storiesRef
-          .document(story.authorId)
+          .doc(story.authorId)
           .collection('stories')
-          .document(story.id)
-          .updateData({'views': storyViews});
+          .doc(story.id)
+          .update({'views': storyViews});
     }
   }
 }

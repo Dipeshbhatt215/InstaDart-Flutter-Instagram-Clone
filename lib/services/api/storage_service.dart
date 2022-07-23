@@ -39,8 +39,8 @@ class StroageService {
 
   static Future<String> _uploadImage(
       String path, String imageId, File image) async {
-    StorageUploadTask uploadTask = storageRef.child(path).putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+    UploadTask uploadTask = storageRef.child(path).putFile(image);
+    Reference storageSnap = await uploadTask.onComplete;
     String downloadUrl = await storageSnap.ref.getDownloadURL();
     return downloadUrl;
   }
@@ -48,9 +48,9 @@ class StroageService {
   static Future<String> uploadPost(File imageFile) async {
     String photoId = Uuid().v4();
     File? image = await compressImage(photoId, imageFile);
-    StorageUploadTask uploadTask =
+   UploadTask uploadTask =
         storageRef.child('images/posts/post_$photoId.jpg').putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+   Reference storageSnap = await uploadTask.onComplete;
     String downloadUrl = await storageSnap.ref.getDownloadURL();
     return downloadUrl;
   }

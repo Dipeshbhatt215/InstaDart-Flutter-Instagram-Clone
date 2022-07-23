@@ -209,7 +209,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
               Divider(),
               StreamBuilder(
                 stream: commentsRef
-                    .document(widget.post.id)
+                    .doc(widget.post.id)
                     .collection('postComments')
                     .orderBy('timestamp', descending: true)
                     .snapshots(),

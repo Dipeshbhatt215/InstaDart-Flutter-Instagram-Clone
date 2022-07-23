@@ -47,7 +47,7 @@ class _PostViewState extends State<PostView> {
   @override
   void initState() {
     super.initState();
-    _likeCount = widget.post.likeCount;
+    _likeCount = widget.post.likeCount!;
     _post = widget.post;
     _initPostLiked();
   }
@@ -56,7 +56,7 @@ class _PostViewState extends State<PostView> {
   didUpdateWidget(PostView oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.post.likeCount != _post.likeCount) {
-      _likeCount = widget.post.likeCount;
+      _likeCount = widget.post.likeCount!;
     }
   }
 
@@ -418,7 +418,7 @@ class _PostViewState extends State<PostView> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
                 child: Text(
-                  timeago.format(_post.timestamp.toDate()),
+                  timeago.format(_post.timestamp!.toDate()),
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 12.0,

@@ -94,8 +94,7 @@ class _ChatScreenState extends State<ChatScreen> {
   checkForImage() {
     if (widget.imageFile != null) {
       showDialog(
-          context: context,
-          child: SimpleDialog(
+          builder: (context) => SimpleDialog(
             backgroundColor: Theme.of(context).backgroundColor.withOpacity(0.8),
             title: Column(
               children: [
@@ -148,7 +147,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ],
             ),
-          ));
+          ), context: context);
     }
   }
 

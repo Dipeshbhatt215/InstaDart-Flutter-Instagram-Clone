@@ -67,7 +67,7 @@ class _MessageBubbleState extends State<MessageBubble> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
           child: Text(
-            widget.message.text,
+            widget.message.text!,
             style:
                 TextStyle(color: Theme.of(context).accentColor, fontSize: 15.0),
           ),
@@ -104,7 +104,7 @@ class _MessageBubbleState extends State<MessageBubble> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Hero(
-                  tag: widget.message.imageUrl,
+                  tag: widget.message.imageUrl!,
                   child: CachedNetworkImage(
                     progressIndicatorBuilder: (context, url, downloadProgress) {
                       return Center(
@@ -113,7 +113,7 @@ class _MessageBubbleState extends State<MessageBubble> {
                       );
                     },
                     fadeInDuration: Duration(milliseconds: 500),
-                    imageUrl: widget.message.imageUrl,
+                    imageUrl: widget.message.imageUrl!,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -146,7 +146,7 @@ class _MessageBubbleState extends State<MessageBubble> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Hero(
-                  tag: widget.message.giphyUrl,
+                  tag: widget.message.giphyUrl!,
                   child: CachedNetworkImage(
                     progressIndicatorBuilder: (context, url, downloadProgress) {
                       return Center(
@@ -155,7 +155,7 @@ class _MessageBubbleState extends State<MessageBubble> {
                       );
                     },
                     fadeInDuration: Duration(milliseconds: 500),
-                    imageUrl: widget.message.giphyUrl,
+                    imageUrl: widget.message.giphyUrl!,
                     fit: BoxFit.contain,
                   ),
                 ),

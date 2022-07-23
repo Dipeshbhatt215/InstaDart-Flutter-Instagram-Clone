@@ -39,7 +39,7 @@ class _DirectMessagesWidgetState extends State<DirectMessagesWidget> {
     
     List<Chat> dataToReturn = [];
 
-    Stream<QuerySnapshot> stream = Firestore.instance
+    Stream<QuerySnapshot> stream = FirebaseFirestore.instance
         .collection('chats')
         .where('memberIds', arrayContains: _currentUser.id)
         .orderBy('recentTimestamp', descending: true)
@@ -169,7 +169,7 @@ class _DirectMessagesWidgetState extends State<DirectMessagesWidget> {
       ),
       trailing: Text(
         timeFormat.format(
-          chat.recentTimestamp.toDate(),
+          chat.recentTimestamp!.toDate(),
         ),
         style: readStyle,
       ),

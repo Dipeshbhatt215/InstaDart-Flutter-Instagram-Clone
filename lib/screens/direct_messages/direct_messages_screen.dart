@@ -4,7 +4,10 @@ import 'package:instagram/utilities/constants.dart';
 
 class DirectMessagesScreen extends StatefulWidget {
   final Function backToHomeScreen;
-  DirectMessagesScreen(this.backToHomeScreen);
+  final VoidCallback onPressed;
+  
+  const DirectMessagesScreen({required Key key, required this.backToHomeScreen,required this.onPressed}) : super(key: key);
+ // DirectMessagesScreen(this.backToHomeScreen,this.onPressed);
   @override
   _DirectMessagesScreenState createState() => _DirectMessagesScreenState();
 }
@@ -16,7 +19,7 @@ class _DirectMessagesScreenState extends State<DirectMessagesScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: widget.backToHomeScreen,
+          onPressed: onPressed,
         ),
         title: Text('Direct'),
       ),

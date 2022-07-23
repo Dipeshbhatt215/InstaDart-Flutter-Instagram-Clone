@@ -4,7 +4,7 @@ import 'package:instagram/utilities/constants.dart';
 
 class DatabaseService {
   static void updateUser(User user) {
-    usersRef.document(user.id).updateData({
+    usersRef.doc(user.id).update({
       'name': user.name,
       'profileImageUrl': user.profileImageUrl,
       'bio': user.bio,
@@ -14,13 +14,13 @@ class DatabaseService {
 
   static Future<QuerySnapshot> searchUsers(String name) {
     Future<QuerySnapshot> users =
-        usersRef.where('name', isGreaterThanOrEqualTo: name).getDocuments();
+        usersRef.where('name', isGreaterThanOrEqualTo: name).get();
     return users;
   }
 
   static void createPost(Post post) {
     try {
-      postsRef.document(post.authorId).collection('userPosts').add({
+      postsRef.doc(post.authorId).collection('userPosts').add({
         'imageUrl': post.imageUrl,
         'caption': post.caption,
         'likeCount': post.likeCount,
@@ -47,10 +47,10 @@ class DatabaseService {
     }
 
     postsRef
-        .document(post.authorId)
+        .doc(post.authorId)
         .collection(collection)
-        .document(post.id)
-        .updateData({
+        .doc(post.id)
+        .update({
       'caption': post.caption,
       'location': post.location,
     });
@@ -59,10 +59,10 @@ class DatabaseService {
   static void allowDisAllowPostComments(Post post, bool commentsAllowed) {
     try {
       postsRef
-          .document(post.authorId)
+          .doc(post.authorId)
           .collection('userPosts')
-          .document(post.id)
-          .updateData({
+          .doc(post.id)
+          .update({
         'commentsAllowed': commentsAllowed,
       });
     } catch (e) {
@@ -72,10 +72,10 @@ class DatabaseService {
 
   static void deletePost(Post post, PostStatus postStatus) {
     postsRef
-        .document(post.authorId)
+        .doc(post.authorId)
         .collection('deletedPosts')
-        .document(post.id)
-        .setData({
+        .doc(post.id)
+        .set({
       'imageUrl': post.imageUrl,
       'caption': post.caption,
       'likeCount': post.likeCount,
@@ -88,18 +88,18 @@ class DatabaseService {
         ? collection = 'userPosts'
         : collection = 'archivedPosts';
     postsRef
-        .document(post.authorId)
+        .doc(post.authorId)
         .collection(collection)
-        .document(post.id)
+        .doc(post.id)
         .delete();
   }
 
   static void archivePost(Post post, PostStatus postStatus) {
     postsRef
-        .document(post.authorId)
+        .doc(post.authorId)
         .collection('archivedPosts')
-        .document(post.id)
-        .setData({
+        .doc(post.id)
+        .set({
       'imageUrl': post.imageUrl,
       'caption': post.caption,
       'likeCount': post.likeCount,
@@ -113,19 +113,19 @@ class DatabaseService {
         : collection = 'deletedPosts';
 
     postsRef
-        .document(post.authorId)
+        .doc(post.authorId)
         .collection(collection)
-        .document(post.id)
+        .doc(post.id)
         .delete();
   }
 
   static void recreatePost(Post post, PostStatus postStatus) {
     try {
       postsRef
-          .document(post.authorId)
+          .doc(post.authorId)
           .collection('userPosts')
-          .document(post.id)
-          .setData({
+          .doc(post.id)
+          .set({
         'imageUrl': post.imageUrl,
         'caption': post.caption,
         'likeCount': post.likeCount,
@@ -140,9 +140,9 @@ class DatabaseService {
           : collection = 'deletedPosts';
 
       postsRef
-          .document(post.authorId)
+          .doc(post.authorId)
           .collection(collection)
-          .document(post.id)
+          .doc(post.id)
           .delete();
     } catch (e) {
       print(e);
@@ -150,23 +150,23 @@ class DatabaseService {
   }
 
   static void followUser(
-      {String currentUserId, String userId, String receiverToken}) {
+      {required String currentUserId, required String userId, required String receiverToken}) {
     // Add user to current user's following collection
     followingRef
-        .document(currentUserId)
+        .doc(currentUserId)
         .collection(userFollowing)
-        .document(userId)
-        .setData({'timestamp': Timestamp.fromDate(DateTime.now())});
+        .doc(userId)
+        .set({'timestamp': Timestamp.fromDate(DateTime.now())});
 
     // Add current user to user's followers collection
     followersRef
-        .document(userId)
+        .doc(userId)
         .collection(usersFollowers)
-        .document(currentUserId)
-        .setData({'timestamp': Timestamp.fromDate(DateTime.now())});
+        .doc(currentUserId)
+        .set({'timestamp': Timestamp.fromDate(DateTime.now())});
 
     Post post = Post(
-      authorId: userId,
+      authorId: userId, caption: '', commentsAllowed: null, id: '', imageUrl: '', likeCount: null, location: '', timestamp: null,
     );
 
     addActivityItem(
@@ -182,12 +182,12 @@ class DatabaseService {
     );
   }
 
-  static void unfollowUser({String currentUserId, String userId}) {
+  static void unfollowUser({required String currentUserId, required String userId}) {
     // Remove user from current user's following collection
     followingRef
-        .document(currentUserId)
+        .doc(currentUserId)
         .collection(userFollowing)
-        .document(userId)
+        .doc(userId)
         .get()
         .then((doc) {
       if (doc.exists) {
@@ -197,9 +197,9 @@ class DatabaseService {
 
     // Remove current user from user's followers collection
     followersRef
-        .document(userId)
+        .doc(userId)
         .collection(usersFollowers)
-        .document(currentUserId)
+        .doc(currentUserId)
         .get()
         .then((doc) {
       if (doc.exists) {
@@ -208,7 +208,7 @@ class DatabaseService {
     });
 
     Post post = Post(
-      authorId: userId,
+      authorId: userId, caption: '', commentsAllowed: null, id: '', imageUrl: '', likeCount: null, location: '', timestamp: null,
     );
 
     deleteActivityItem(
@@ -224,11 +224,11 @@ class DatabaseService {
   }
 
   static Future<bool> isFollowingUser(
-      {String currentUserId, String userId}) async {
+      {required String currentUserId, required String userId}) async {
     DocumentSnapshot followingDoc = await followersRef
-        .document(userId)
+        .doc(userId)
         .collection(usersFollowers)
-        .document(currentUserId)
+        .doc(currentUserId)
         .get();
 
     return followingDoc.exists;
@@ -236,38 +236,38 @@ class DatabaseService {
 
   static Future<int> numFollowing(String userId) async {
     QuerySnapshot followingSnapshot = await followingRef
-        .document(userId)
+        .doc(userId)
         .collection(userFollowing)
-        .getDocuments();
-    return followingSnapshot.documents.length;
+        .get();
+    return followingSnapshot.docs.length;
   }
 
   static Future<int> numFollowers(String userId) async {
     QuerySnapshot followersSnapshot = await followersRef
-        .document(userId)
+        .doc(userId)
         .collection(usersFollowers)
-        .getDocuments();
+        .get();
 
-    return followersSnapshot.documents.length;
+    return followersSnapshot.docs.length;
   }
 
-  static Future<List<String>> getUserFollowingIds(String userId) async {
+  static Future<List> getUserFollowingIds(String userId) async {
     QuerySnapshot followingSnapshot = await followingRef
-        .document(userId)
+        .doc(userId)
         .collection(userFollowing)
-        .getDocuments();
+        .get();
 
-    List<String> following =
-        followingSnapshot.documents.map((doc) => doc.documentID).toList();
+    List following =
+        followingSnapshot.docs.map((doc) => doc.id).toList();
     return following;
   }
 
   static Future<List<User>> getUserFollowingUsers(String userId) async {
-    List<String> followingUserIds = await getUserFollowingIds(userId);
+    List followingUserIds = await getUserFollowingIds(userId);
     List<User> followingUsers = [];
 
     for (var userId in followingUserIds) {
-      DocumentSnapshot userSnapshot = await usersRef.document(userId).get();
+      DocumentSnapshot userSnapshot = await usersRef.doc(userId).get();
       User user = User.fromDoc(userSnapshot);
       followingUsers.add(user);
     }
@@ -275,41 +275,41 @@ class DatabaseService {
     return followingUsers;
   }
 
-  static Future<List<String>> getUserFollowersIds(String userId) async {
+  static Future<List> getUserFollowersIds(String userId) async {
     QuerySnapshot followersSnapshot = await followersRef
-        .document(userId)
+        .doc(userId)
         .collection(usersFollowers)
-        .getDocuments();
+        .get();
 
-    List<String> followers =
-        followersSnapshot.documents.map((doc) => doc.documentID).toList();
+    List followers =
+        followersSnapshot.docs.map((doc) => doc.id).toList();
     return followers;
   }
 
   static Future<List<Post>> getFeedPosts(String userId) async {
     QuerySnapshot feedSnapshot = await feedsRef
-        .document(userId)
+        .doc(userId)
         .collection('userFeed')
         .orderBy('timestamp', descending: true)
-        .getDocuments();
+        .get();
     List<Post> posts =
-        feedSnapshot.documents.map((doc) => Post.fromDoc(doc)).toList();
+        feedSnapshot.docs.map((doc) => Post.fromDoc(doc)).toList();
     return posts;
   }
 
   static Future<List<Post>> getAllFeedPosts() async {
     List<Post> allPosts = [];
 
-    QuerySnapshot usersSnapshot = await usersRef.getDocuments();
+    QuerySnapshot usersSnapshot = await usersRef.get();
 
-    for (var userDoc in usersSnapshot.documents) {
+    for (var userDoc in usersSnapshot.docs) {
       QuerySnapshot feedSnapshot = await postsRef
-          .document(userDoc.documentID)
+          .doc(userDoc.id)
           .collection('userPosts')
           .orderBy('timestamp', descending: true)
-          .getDocuments();
+          .get();
 
-      for (var postDoc in feedSnapshot.documents) {
+      for (var postDoc in feedSnapshot.docs) {
         Post post = Post.fromDoc(postDoc);
         allPosts.add(post);
       }
@@ -325,54 +325,54 @@ class DatabaseService {
         : collection = 'deletedPosts';
 
     QuerySnapshot feedSnapshot = await postsRef
-        .document(userId)
+        .doc(userId)
         .collection(collection)
         .orderBy('timestamp', descending: true)
-        .getDocuments();
+        .get();
     List<Post> posts =
-        feedSnapshot.documents.map((doc) => Post.fromDoc(doc)).toList();
+        feedSnapshot.docs.map((doc) => Post.fromDoc(doc)).toList();
     return posts;
   }
 
   static Future<List<Post>> getUserPosts(String userId) async {
     QuerySnapshot userPostsSnapshot = await postsRef
-        .document(userId)
+        .doc(userId)
         .collection('userPosts')
         .orderBy('timestamp', descending: true)
-        .getDocuments();
+        .get();
     List<Post> posts =
-        userPostsSnapshot.documents.map((doc) => Post.fromDoc(doc)).toList();
+        userPostsSnapshot.docs.map((doc) => Post.fromDoc(doc)).toList();
     return posts;
   }
 
   static Future<User> getUserWithId(String userId) async {
-    DocumentSnapshot userDocSnapshot = await usersRef.document(userId).get();
+    DocumentSnapshot userDocSnapshot = await usersRef.doc(userId).get();
     if (userDocSnapshot.exists) {
       return User.fromDoc(userDocSnapshot);
     }
-    return User();
+    return User(bio: '', email: '', id: '', isVerified: null, name: '', profileImageUrl: '', role: '', timeCreated: null, token: '');
   }
 
   static void likePost(
-      {String currentUserId, Post post, String receiverToken}) {
+      {required String currentUserId, required Post post, required String receiverToken}) {
     DocumentReference postRef = postsRef
-        .document(post.authorId)
+        .doc(post.authorId)
         .collection('userPosts')
-        .document(post.id);
+        .doc(post.id);
     postRef.get().then((doc) {
       int likeCount = doc.data['likeCount'];
-      postRef.updateData({'likeCount': likeCount + 1});
+      postRef.update({'likeCount': likeCount + 1});
       likesRef
-          .document(post.id)
+          .doc(post.id)
           .collection('postLikes')
-          .document(currentUserId)
-          .setData({});
+          .doc(currentUserId)
+          .set({});
     });
 
     addActivityItem(
       currentUserId: currentUserId,
       post: post,
-      comment: post.caption ?? null,
+      comment: post.caption,
       isFollowEvent: false,
       isLikeMessageEvent: false,
       isLikeEvent: true,
@@ -382,18 +382,18 @@ class DatabaseService {
     );
   }
 
-  static void unlikePost({String currentUserId, Post post}) {
+  static void unlikePost({required String currentUserId, required Post post}) {
     DocumentReference postRef = postsRef
-        .document(post.authorId)
+        .doc(post.authorId)
         .collection('userPosts')
-        .document(post.id);
+        .doc(post.id);
     postRef.get().then((doc) {
-      int likeCount = doc.data['likeCount'];
-      postRef.updateData({'likeCount': likeCount + -1});
+      int likeCount = doc.data["likeCount"];
+      postRef.update({'likeCount': likeCount + -1});
       likesRef
-          .document(post.id)
+          .doc(post.id)
           .collection('postLikes')
-          .document(currentUserId)
+          .doc(currentUserId)
           .get()
           .then((doc) {
         if (doc.exists) {
@@ -414,18 +414,18 @@ class DatabaseService {
     );
   }
 
-  static Future<bool> didLikePost({String currentUserId, Post post}) async {
+  static Future<bool> didLikePost({required String currentUserId, required Post post}) async {
     DocumentSnapshot userDoc = await likesRef
-        .document(post.id)
+        .doc(post.id)
         .collection('postLikes')
-        .document(currentUserId)
+        .doc(currentUserId)
         .get();
     return userDoc.exists;
   }
 
   static void commentOnPost(
-      {String currentUserId, Post post, String comment, String recieverToken}) {
-    commentsRef.document(post.id).collection('postComments').add({
+      {required String currentUserId, required Post post,required String comment, required String recieverToken}) {
+    commentsRef.doc(post.id).collection('postComments').add({
       'content': comment,
       'authorId': currentUserId,
       'timestamp': Timestamp.fromDate(DateTime.now())
@@ -446,16 +446,16 @@ class DatabaseService {
   static void addActivityItem({
     required String currentUserId,
     required Post post,
-    required String comment,
+    required String ? comment,
     required bool isFollowEvent,
     required bool isCommentEvent,
     required bool isLikeEvent,
     required bool isMessageEvent,
-    required bool isLikeMessageEvent,
+    required bool ?isLikeMessageEvent,
     required String recieverToken,
   }) {
     if (currentUserId != post.authorId) {
-      activitiesRef.document(post.authorId).collection('userActivities').add({
+      activitiesRef.doc(post.authorId).collection('userActivities').add({
         'fromUserId': currentUserId,
         'postId': post.id,
         'postImageUrl': post.imageUrl,
@@ -474,7 +474,7 @@ class DatabaseService {
   static void deleteActivityItem(
       {required String currentUserId,
       required Post post,
-      required String comment,
+      required String ?comment,
       required bool isFollowEvent,
       required bool isCommentEvent,
       required bool isLikeEvent,
@@ -495,29 +495,29 @@ class DatabaseService {
     }
 
     QuerySnapshot activities = await activitiesRef
-        .document(post.authorId)
+        .doc(post.authorId)
         .collection('userActivities')
         .where('fromUserId', isEqualTo: currentUserId)
         .where('postId', isEqualTo: post.id)
-        .where(boolCondition, isEqualTo: true)
-        .getDocuments();
+        .where(bool, isEqualTo: true)
+        .get();
 
-    activities.documents.forEach((element) {
+    activities.docs.forEach((element) {
       activitiesRef
-          .document(post.authorId)
+          .doc(post.authorId)
           .collection('userActivities')
-          .document(element.documentID)
+          .doc(element.id)
           .delete();
     });
   }
 
   static Future<List<Activity>> getActivities(String userId) async {
     QuerySnapshot userActivitiesSnapshot = await activitiesRef
-        .document(userId)
+        .doc(userId)
         .collection('userActivities')
         .orderBy('timestamp', descending: true)
-        .getDocuments();
-    List<Activity> activity = userActivitiesSnapshot.documents
+        .get();
+    List<Activity> activity = userActivitiesSnapshot.docs
         .map((doc) => Activity.fromDoc(doc))
         .toList();
     return activity;
@@ -525,9 +525,9 @@ class DatabaseService {
 
   static Future<Post> getUserPost(String userId, String postId) async {
     DocumentSnapshot postDocSnapshot = await postsRef
-        .document(userId)
+        .doc(userId)
         .collection('userPosts')
-        .document(postId)
+        .doc(postId)
         .get();
     return Post.fromDoc(postDocSnapshot);
   }

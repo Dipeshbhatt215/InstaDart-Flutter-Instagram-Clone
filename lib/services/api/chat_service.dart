@@ -35,7 +35,7 @@ class ChatService {
   }
 
   static void sendChatMessage(Chat chat, Message message, User receiverUser) {
-    chatsRef.document(chat.id).collection('messages').add({
+    chatsRef.doc(chat.id).collection('messages').add({
       'senderId': message.senderId,
       'text': message.text,
       'imageUrl': message.imageUrl,
@@ -50,9 +50,9 @@ class ChatService {
       commentsAllowed: null,
       id: '',
       imageUrl: '',
-      likeCount: ,
+ 
       location: '',
-      timestamp: null,
+      timestamp: null, likeCount: null,
     );
 
     DatabaseService.addActivityItem(
@@ -63,14 +63,14 @@ class ChatService {
       isLikeEvent: false,
       isMessageEvent: true,
       post: post,
-      recieverToken: receiverUser.token,
+      recieverToken: receiverUser.token, isLikeMessageEvent: null,
     );
   }
 
   static void setChatRead(BuildContext context, Chat chat, bool read) async {
     String currentUserId =
         Provider.of<UserData>(context, listen: false).currentUserId;
-    chatsRef.document(chat.id).updateData({
+    chatsRef.doc(chat.id).update({
       'readStatus.$currentUserId': read,
     });
   }
@@ -85,26 +85,26 @@ class ChatService {
   // }
 
   static Future<Chat> getChatById(String chatId) async {
-    DocumentSnapshot chatDocSnapshot = await chatsRef.document(chatId).get();
+    DocumentSnapshot chatDocSnapshot = await chatsRef.doc(chatId).get();
     if (chatDocSnapshot.exists) {
       return Chat.fromDoc(chatDocSnapshot);
     }
     return Chat(id: '', memberIds: [], memberInfo: [], readStatus: null, recentMessage: '', recentSender: '', recentTimestamp: null);
   }
 
-  static Future<Chat> getChatByUsers(List<String> users) async {
+  static Future<Chat?> getChatByUsers(List<String> users) async {
     QuerySnapshot snapshot = await chatsRef.where('memberIds', whereIn: [
       [users[1], users[0]]
-    ]).getDocuments();
+    ]).get();
 
-    if (snapshot.documents.isEmpty) {
+    if (snapshot.docs.isEmpty) {
       snapshot = await chatsRef.where('memberIds', whereIn: [
         [users[0], users[1]]
-      ]).getDocuments();
+      ]).get();
     }
 
-    if (snapshot.documents.isNotEmpty) {
-      return Chat.fromDoc(snapshot.documents[0]);
+    if (snapshot.docs.isNotEmpty) {
+      return Chat.fromDoc(snapshot.docs[0]);
     }
     return null;
   }
@@ -112,10 +112,10 @@ class ChatService {
   static Future<Null>? likeUnlikeMessage(Message message, String chatId,
       bool isLiked, User receiverUser, String currentUserId) {
     chatsRef
-        .document(chatId)
+        .doc(chatId)
         .collection('messages')
-        .document(message.id)
-        .updateData({'isLiked': isLiked});
+        .doc(message.id)
+        .update({'isLiked': isLiked});
 
     Post post = Post(
       authorId: receiverUser.id, caption: '', commentsAllowed: null, id: '', imageUrl: '', likeCount: null, location: '', timestamp: null,

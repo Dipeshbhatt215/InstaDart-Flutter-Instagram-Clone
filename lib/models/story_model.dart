@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Story {
   final String id;
-  final Timestamp timeEnd;
-  final Timestamp timeStart;
+  final Timestamp ?timeEnd;
+  final Timestamp ?timeStart;
   final String authorId;
   final String imageUrl;
   final String caption;

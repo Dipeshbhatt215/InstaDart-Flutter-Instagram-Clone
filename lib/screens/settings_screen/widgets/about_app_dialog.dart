@@ -23,6 +23,8 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
   bool _isFollowing = false;
   String _followText = 'Follow ME!';
   bool _isLoading = true;
+  
+  
 
   @override
   void initState() {

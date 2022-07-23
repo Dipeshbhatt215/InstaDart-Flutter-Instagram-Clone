@@ -14,7 +14,7 @@ class User {
   // final List<String> closeFriends;
   // final bool allowStoryMessageReplies;
   final String role;
-  final bool isVerified;
+  final bool ?isVerified;
   final String? website;
   final Timestamp? timeCreated;
 
