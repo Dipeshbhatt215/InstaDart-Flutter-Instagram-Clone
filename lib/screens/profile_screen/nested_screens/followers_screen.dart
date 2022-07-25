@@ -62,7 +62,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
   }
 
   Future _setupFollowers() async {
-    List<String> userFollowersIds =
+    List userFollowersIds =
         await DatabaseService.getUserFollowersIds(widget.user.id);
 
     List<User> userFollowers = [];
@@ -84,7 +84,7 @@ class _FollowersScreenState extends State<FollowersScreen> {
   }
 
   Future _setupFollowing() async {
-    List<String> userFollowingIds =
+    List userFollowingIds =
         await DatabaseService.getUserFollowingIds(widget.user.id);
 
     List<User> userFollowing = [];

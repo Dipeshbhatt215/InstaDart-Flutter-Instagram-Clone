@@ -153,7 +153,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                if (snapshot.data.documents.length == 0) {
+                if (snapshot.data.docs.length == 0) {
                   return Center(
                     child: Text('No Users found! Please try again.'),
                   );
@@ -161,7 +161,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 return ListView.builder(
                     itemCount: snapshot.data?.documents.length,
                     itemBuilder: (BuildContext context, int index) {
-                      User user = User.fromDoc(snapshot.data?.documents[index]);
+                      User user = User.fromDoc(snapshot.data?.docs[index]);
                       // Prevent current user to send messages to himself
                       return (widget.searchFrom != SearchFrom.homeScreen &&
                               user.id == _currentUserId)

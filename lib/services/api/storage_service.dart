@@ -17,11 +17,11 @@ class StroageService {
       RegExp exp = RegExp(r'userProfile_(.*).jpg');
       photoId = exp.firstMatch(url)[1];
     }
-    File image = await compressImage(photoId!, imageFile);
-    StorageUploadTask uploadTask = storageRef
+    File? image = await compressImage(photoId!, imageFile);
+    UploadTask uploadTask = storageRef
         .child('images/users/userProfile_$photoId.jpg')
-        .putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+        .putFile(image!);
+    Reference storageSnap = await uploadTask.onComplete;
     String downloadUrl = await storageSnap.ref.getDownloadURL();
     return downloadUrl;
   }

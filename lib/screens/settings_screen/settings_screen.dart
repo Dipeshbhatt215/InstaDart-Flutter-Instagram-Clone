@@ -15,7 +15,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   late String _currentUserId;
 
-  _buildOptionTile(Icon icon, String title, Function onTap) {
+  _buildOptionTile(Icon icon, String title, Function ()onTap) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
       leading: icon,

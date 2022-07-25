@@ -27,7 +27,7 @@ class _StoryScreenState extends State<StoryScreen>
   int _currentIndex = 0;
   late DragStartDetails startVerticalDragDetails;
   late DragUpdateDetails updateVerticalDragDetails;
-  int _seenStories;
+  late int _seenStories;
 
   @override
   void initState() {
@@ -208,10 +208,10 @@ class _StoryScreenState extends State<StoryScreen>
     } else {}
   }
 
-  void _loadStory({Story story, bool animateToPage = true}) {
+  void _loadStory({required Story story, bool animateToPage = true}) {
     _animController.stop();
     _animController.reset();
-    _animController.duration = Duration(seconds: story.duration);
+    _animController.duration = Duration(seconds: story.duration!);
     _animController.forward();
 
     if (animateToPage) {

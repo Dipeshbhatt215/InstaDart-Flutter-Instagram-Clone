@@ -3,8 +3,8 @@ import 'package:instagram/screens/screens.dart';
 import 'package:instagram/utilities/constants.dart';
 
 class DirectMessagesScreen extends StatefulWidget {
-  final Function backToHomeScreen;
-  final VoidCallback onPressed;
+  final Function() backToHomeScreen;
+  final Function() onPressed;
   
   const DirectMessagesScreen({required Key key, required this.backToHomeScreen,required this.onPressed}) : super(key: key);
  // DirectMessagesScreen(this.backToHomeScreen,this.onPressed);

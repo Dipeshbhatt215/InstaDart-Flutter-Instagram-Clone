@@ -387,8 +387,9 @@ class DatabaseService {
         .doc(post.authorId)
         .collection('userPosts')
         .doc(post.id);
-    postRef.get().then((doc) {
-      int likeCount = doc.data["likeCount"];
+
+    postRef.get().then((postdata) {
+      int likeCount = postdata.data()!["likeCount"];
       postRef.update({'likeCount': likeCount + -1});
       likesRef
           .doc(post.id)

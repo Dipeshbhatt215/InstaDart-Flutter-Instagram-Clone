@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class BlankStoryCircle extends StatelessWidget {
   final User user;
-  final Function goToCameraScreen;
+  final Function() goToCameraScreen;
   final double size;
   final bool showUserName;
 

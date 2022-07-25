@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart' as fuser ;
+import 'package:firebase_auth/firebase_auth.dart' as fuser;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:instagram/models/models.dart';
@@ -9,6 +9,7 @@ import 'package:instagram/utilities/themes.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+String kAdminUId = "0";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.getInstance().then((prefs) {
@@ -60,7 +61,8 @@ class _MyAppState extends State<MyApp> {
           Provider.of<UserData>(context, listen: false).currentUserId =
               snapshot.data!.uid;
           return HomeScreen(
-            currentUserId: snapshot.data!.uid, cameras: [],
+            currentUserId: snapshot.data!.uid,
+            cameras: [],
           );
         } else {
           return LoginScreen();
@@ -75,7 +77,6 @@ class _MyAppState extends State<MyApp> {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       title: 'InstaDart',
-      
       debugShowCheckedModeBanner: false,
       theme: themeNotifier.getTheme(),
       home: _getScreenId(),

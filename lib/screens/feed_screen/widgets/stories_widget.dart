@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../../../models/user_model.dart';
 class StoriesWidget extends StatefulWidget {
   final List<User> users;
-  final Function goToCameraScreen;
+  final Function() goToCameraScreen;
   const StoriesWidget(this.users, this.goToCameraScreen);
 
   @override
@@ -40,7 +40,7 @@ class _StoriesWidgetState extends State<StoriesWidget> {
 
     List<Story> stories = [];
 
-    List<Story> currentUserStories =
+   List<Story>? currentUserStories =
         await StoriesService.getStoriesByUserId(_currentUser.id, true);
 
     if (currentUserStories != null) {
@@ -51,7 +51,7 @@ class _StoriesWidgetState extends State<StoriesWidget> {
     }
 
     for (User user in widget.users) {
-      List<Story> userStories =
+      List<Story>? userStories =
           await StoriesService.getStoriesByUserId(user.id, true);
       if (!mounted) return;
 

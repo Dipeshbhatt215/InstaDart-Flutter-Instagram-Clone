@@ -6,7 +6,7 @@ class AnimatedBar extends StatelessWidget {
   final int currentIndex;
 
   const AnimatedBar(
-      {required Key key,
+      {required Key ?key,
       required this.animationController,
       required this.position,
       required this.currentIndex})

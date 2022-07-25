@@ -90,7 +90,7 @@ class _DeletedPostsScreenState extends State<DeletedPostsScreen> {
             : 'Archived Posts'),
       ),
       body: FutureBuilder(
-        future: usersRef.document(widget.currentUserId).get(),
+        future: usersRef.doc(widget.currentUserId).get(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData || _posts == null) {
             return Center(

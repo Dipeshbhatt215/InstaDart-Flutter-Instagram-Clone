@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram/utilities/themes.dart';
 
 class CircularIconButton extends StatelessWidget {
-  final Function onTap;
+  final Function()onTap;
   final Widget icon;
   final double containerRadius;
   final EdgeInsets padding;

@@ -13,7 +13,7 @@ class UserBadges extends StatelessWidget {
     return Row(
       children: <Widget>[
         if (user.isVerified == true) SizedBox(width: 5),
-        if (user.isVerified)
+        if (user.isVerified!)
           Tooltip(
             message: 'User is Verified',
             child: Image.asset(

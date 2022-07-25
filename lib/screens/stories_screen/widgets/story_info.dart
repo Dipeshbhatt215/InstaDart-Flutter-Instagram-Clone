@@ -10,7 +10,7 @@ class StoryInfo extends StatelessWidget {
   final User user;
   final Story story;
   final double height;
-  final Function onSwipeUp;
+  final Function() onSwipeUp;
   const StoryInfo({
     required this.user,
     required this.story,
@@ -27,7 +27,7 @@ class StoryInfo extends StatelessWidget {
         children: [
           _buildUserInfo(),
           if (story.caption != '') _buildStoryCaption(),
-          if (story.linkUrl != '') SwipeUp(onSwipeUp: onSwipeUp),
+          if (story.linkUrl != '') SwipeUp(onSwipeUp: onSwipeUp, key: null,),
         ],
       ),
     );
@@ -85,7 +85,7 @@ class StoryInfo extends StatelessWidget {
                                 )
                               : SizedBox.shrink(),
                           Text(
-                            '${timeago.format(story.timeStart.toDate(), locale: 'en_short')}',
+                            '${timeago.format(story.timeStart!.toDate(), locale: 'en_short')}',
                             style: TextStyle(color: Colors.white),
                           ),
                         ],

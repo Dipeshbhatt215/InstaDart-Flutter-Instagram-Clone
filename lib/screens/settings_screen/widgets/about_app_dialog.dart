@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:instagram/main.dart';
 import 'package:instagram/models/models.dart';
 import 'package:instagram/screens/screens.dart';
 import 'package:instagram/utilities/custom_navigation.dart';
@@ -9,7 +10,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:instagram/services/services.dart';
-import 'package:instagram/utilities/repo_const.dart';
+
 import 'package:instagram/utilities/themes.dart';
 
 class AboutAppDialog extends StatefulWidget {
@@ -195,7 +196,7 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
                         });
                         DatabaseService.followUser(
                             currentUserId: widget.currentUserId,
-                            userId: kAdminUId);
+                            userId: kAdminUId, receiverToken: '');
                       })
             : SizedBox.shrink(),
         Divider(),

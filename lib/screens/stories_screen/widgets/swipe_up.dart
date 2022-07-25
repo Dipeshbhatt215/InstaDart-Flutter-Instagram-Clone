@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 class SwipeUp extends StatefulWidget {
-  final Function onSwipeUp;
-  SwipeUp({required this.onSwipeUp, required Key key}) : super(key: key);
+  final Function()onSwipeUp;
+  SwipeUp({required this.onSwipeUp, required Key ?key}) : super(key: key);
   @override
   _SwipeUpState createState() => _SwipeUpState();
 }

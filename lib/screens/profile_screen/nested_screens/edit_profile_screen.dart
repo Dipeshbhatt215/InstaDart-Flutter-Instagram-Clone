@@ -57,7 +57,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       String url;
 
       if (_website.trim() != '') {
-        url = await UrlValidatorService.isUrlValid(context, _website.trim());
+        url = (await UrlValidatorService.isUrlValid(context, _website.trim()))!;
         if (url == null) {
           setState(() => _isLoading = false);
           return;

@@ -374,7 +374,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
                     ),
                     onTap: () => _showEditStory(
                       onSave: () async {
-                        String url = await UrlValidatorService.isUrlValid(
+                        String? url = await UrlValidatorService.isUrlValid(
                             context, _linkController.text.trim());
                         if (url != null) {
                           setState(() => _storyLink = url);
